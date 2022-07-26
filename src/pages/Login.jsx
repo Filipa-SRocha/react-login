@@ -13,7 +13,6 @@ const Login = () => {
 
 		onSubmit: (values) => {
 			handleLogin(values);
-			alert(JSON.stringify(values));
 		},
 	});
 
