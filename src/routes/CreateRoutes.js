@@ -4,6 +4,8 @@ import { AuthContextProvider } from '../Context/AuthContext';
 import Users from '../pages/users/Users';
 import Menu from '../components/header/Menu';
 import Footer from '../components/footer/Footer';
+import People from '../pages/people/People';
+import Address from '../pages/address/Address';
 
 const CreateRoutes = () => {
 	return (
@@ -13,6 +15,8 @@ const CreateRoutes = () => {
 				<Routes>
 					<Route path='/' element={<Login />} />
 					<Route path='/users' element={<Users />} />
+					<Route path='/people' element={<People />} />
+					<Route path='/address' element={<Address />} />
 				</Routes>
 				<Footer />
 			</AuthContextProvider>
