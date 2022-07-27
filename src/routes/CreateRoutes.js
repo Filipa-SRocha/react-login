@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from '../pages/Login';
 import { AuthContextProvider } from '../Context/AuthContext';
-
 import Users from '../pages/users/Users';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';

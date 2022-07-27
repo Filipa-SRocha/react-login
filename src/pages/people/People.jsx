@@ -1,4 +1,11 @@
+import Permission from '../../utils/Permission';
+
 const People = () => {
-	return <div>People</div>;
+	return (
+		<div>
+			<Permission />
+			People
+		</div>
+	);
 };
 export default People;
