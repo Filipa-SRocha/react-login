@@ -3,12 +3,15 @@ import * as Yup from 'yup';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 import { apiCep } from '../../api';
+import NumberFormat from 'react-number-format';
 
 const Users = () => {
 	const { handleSignUp } = useContext(AuthContext);
 
 	const handleAddress = async (values) => {
-		const { data } = await apiCep.get(`/${values.cep}/json/`);
+		const cep = values.cep.slice(0, 5) + values.cep.slice(6);
+		console.log(cep);
+		const { data } = await apiCep.get(`/${cep}/json/`);
 
 		values.bairro = data.bairro;
 		values.logradouro = data.logradouro;
@@ -20,7 +23,7 @@ const Users = () => {
 		const { values } = useFormikContext();
 
 		useEffect(() => {
-			if (values.cep.length >= 8) {
+			if (!values.cep.includes('_')) {
 				handleAddress(values);
 			}
 		}, [values.cep]);
@@ -74,8 +77,25 @@ const Users = () => {
 						{errors.senha && touched.senha ? <div>{errors.senha}</div> : null}
 
 						<label htmlFor='cep'>CEP: </label>
-						<Field name='cep' />
+						<Field
+							name='cep'
+							render={({ field }) => (
+								<NumberFormat
+									{...field}
+									format='#####-###'
+									mask='_'
+									id='cep'
+									type='text'
+									className={
+										errors.phone && touched.phone
+											? 'text-input error'
+											: 'text-input'
+									}
+								/>
+							)}
+						/>
 						<GetCep />
+
 						{errors.cep && touched.cep ? <div>{errors.cep}</div> : null}
 
 						<label htmlFor='senha'>Logradouro</label>
