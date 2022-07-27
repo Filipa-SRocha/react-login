@@ -1,7 +1,6 @@
 import { useFormikContext, Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useEffect } from 'react';
-
 import { apiCep } from '../../api';
 import NumberFormat from 'react-number-format';
 

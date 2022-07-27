@@ -16,7 +16,7 @@ function AuthContextProvider({ children }) {
 			const { data } = await apiDBC.post('/auth', user);
 			localStorage.setItem('token', data);
 			setIsLogged(true);
-			navigate('/users');
+			navigate('/people');
 		} catch (error) {
 			toast.error('Senha ou login inválido');
 		}
@@ -25,6 +25,7 @@ function AuthContextProvider({ children }) {
 	const handleLogout = () => {
 		localStorage.removeItem('token');
 		setIsLogged(false);
+		navigate('/');
 	};
 
 	const handleSignUp = async (user) => {
@@ -39,7 +40,9 @@ function AuthContextProvider({ children }) {
 	};
 
 	return (
-		<AuthContext.Provider value={{ handleLogin, handleLogout, handleSignUp }}>
+		<AuthContext.Provider
+			value={{ handleLogin, handleLogout, handleSignUp, isLogged }}
+		>
 			{children}
 			<ToastContainer />
 		</AuthContext.Provider>

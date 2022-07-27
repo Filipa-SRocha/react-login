@@ -3,25 +3,30 @@ import { useContext } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 
 const Menu = () => {
-	const { handleLogout } = useContext(AuthContext);
-	const loggedOutMenu = [
-		<Item name='Login' url='/' />,
-		<Item name='Cadastrar Usuário' url='/users' />,
-		<button onClick={handleLogout}>Logout</button>,
-	];
+	const { handleLogout, isLogged } = useContext(AuthContext);
+	console.log('');
+	const LoggedOutMenu = () => {
+		return (
+			<>
+				<Item name='Login' url='/' />
+				<Item name='Cadastrar Usuário' url='/users' />
+			</>
+		);
+	};
 
-	const loggedInMenu = [
-		<Item name='Endereço' url='/address' />,
-		<Item name='Pessoas' url='/people' />,
-	];
+	const LoggedInMenu = () => {
+		return (
+			<>
+				<Item name='Endereço' url='/address' />
+				<Item name='Pessoas' url='/people' />
+				<button onClick={handleLogout}>Logout</button>
+			</>
+		);
+	};
 
 	return (
 		<nav>
-			<ul>
-				<Item name='Login' url='/' />
-				<Item name='Cadastrar Usuário' url='/users' />
-				<button onClick={handleLogout}>Logout</button>
-			</ul>
+			<ul>{isLogged ? <LoggedInMenu /> : <LoggedOutMenu />}</ul>
 		</nav>
 	);
 };
