@@ -8,13 +8,16 @@ import Permission from '../../utils/Permission';
 const Address = () => {
 	const handleCep = async (values) => {
 		const cep = values.cep.slice(0, 5) + values.cep.slice(6);
-		console.log(cep);
-		const { data } = await apiCep.get(`/${cep}/json/`);
+		try {
+			const { data } = await apiCep.get(`/${cep}/json/`);
 
-		values.bairro = data.bairro;
-		values.logradouro = data.logradouro;
-		values.estado = data.uf;
-		values.complemento = data.complemento;
+			values.bairro = data.bairro;
+			values.logradouro = data.logradouro;
+			values.estado = data.uf;
+			values.complemento = data.complemento;
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const GetCep = () => {
