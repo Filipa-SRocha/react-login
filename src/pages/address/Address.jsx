@@ -3,7 +3,6 @@ import * as Yup from 'yup';
 import { useEffect } from 'react';
 import { apiCep } from '../../api';
 import NumberFormat from 'react-number-format';
-import Permission from '../../utils/Permission';
 
 const Address = () => {
 	const handleCep = async (values) => {
@@ -46,7 +45,6 @@ const Address = () => {
 
 	return (
 		<div>
-			<Permission />
 			<h1>Cadastro de Endereço</h1>
 
 			<Formik

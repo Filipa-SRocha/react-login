@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { AuthContextProvider } from './Context/AuthContext';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import CreateRoutes from './routes/CreateRoutes';
-
-const routes = CreateRoutes();
+import Router from './routes/Router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(routes);
+root.render(
+	<AuthContextProvider>
+		<Router />
+	</AuthContextProvider>
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
