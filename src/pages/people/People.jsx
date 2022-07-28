@@ -176,15 +176,15 @@ const People = () => {
 									id={person.idPessoa}
 									onClick={() => {
 										confirmAlert({
-											title: 'Confirm to submit',
-											message: 'Are you sure to do this.',
+											title: 'Eliminar',
+											message: `Quer mesmo eliminar ${person.nome}?`,
 											buttons: [
 												{
-													label: 'Yes',
+													label: 'Sim',
 													onClick: () => handleDelete(person.idPessoa),
 												},
 												{
-													label: 'No',
+													label: 'Não',
 													onClick: () => {
 														return;
 													},

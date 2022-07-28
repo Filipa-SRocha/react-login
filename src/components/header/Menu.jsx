@@ -1,6 +1,7 @@
 import Item from './Item';
 import { useContext } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
+import { NavList } from './Header.styled';
 
 const Menu = () => {
 	const { handleLogout, isLogged } = useContext(AuthContext);
@@ -26,7 +27,7 @@ const Menu = () => {
 
 	return (
 		<nav>
-			<ul>{isLogged ? <LoggedInMenu /> : <LoggedOutMenu />}</ul>
+			<NavList>{isLogged ? <LoggedInMenu /> : <LoggedOutMenu />}</NavList>
 		</nav>
 	);
 };

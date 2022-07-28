@@ -1,11 +1,13 @@
+import { PersonInfoContainer } from './People.styled';
+
 const Person = ({ person }) => {
 	return (
-		<li>
-			<p>Nome: {person.nome}</p>
-			<p>Data de Nascimento: {person.dataNascimento}</p>
-			<p>CPF: {person.cpf}</p>
-			<p>Email: {person.email}</p>
-		</li>
+		<PersonInfoContainer>
+			<p>{person.nome}</p>
+			<p>{person.dataNascimento}</p>
+			<p>{person.cpf}</p>
+			<p>{person.email}</p>
+		</PersonInfoContainer>
 	);
 };
 export default Person;

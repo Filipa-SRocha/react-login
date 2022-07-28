@@ -1,10 +1,11 @@
 import Menu from './Menu';
+import { StyledHeader } from './Header.styled';
 
 const Header = () => {
 	return (
-		<header>
+		<StyledHeader>
 			<Menu />
-		</header>
+		</StyledHeader>
 	);
 };
 export default Header;
