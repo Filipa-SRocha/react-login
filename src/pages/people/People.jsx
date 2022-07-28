@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import NumberFormat from 'react-number-format';
 import { apiDBC } from '../../api';
 import Person from './Person';
+import { Container, PersonContainer } from './People.styled';
 
 const People = () => {
 	const [people, setPeople] = useState([]);
@@ -38,12 +41,15 @@ const People = () => {
 	};
 
 	const registerEdit = async (values) => {
-		console.log('função confirmar ediçao pessoa', values);
-		console.log('id', personToEdit.idPessoa);
-		console.log(values);
 		try {
 			await apiDBC.put(`/pessoa/${personToEdit.idPessoa}`, values);
 			toast.success('Cadastro atualizado com sucesso!');
+			setPersonToEdit({
+				nome: '',
+				dataNascimento: '',
+				cpf: '',
+				email: '',
+			});
 		} catch (error) {
 			console.log('Erro => ', error);
 			toast.error('Erro! Não foi possivel atualizar os dados!');
@@ -67,8 +73,9 @@ const People = () => {
 	};
 
 	//Eliminar Pessoas
-	const handleDelete = async (e) => {
-		const id = e.target.id;
+	const handleDelete = async (id) => {
+		// const id = e.target.id;
+		console.log(id);
 		try {
 			await apiDBC.delete(`/pessoa/${id}`);
 			toast.success('Pessoa removida com sucesso!');
@@ -152,23 +159,47 @@ const People = () => {
 			</section>
 
 			{/* Lista de Pessoas */}
-			<ul>
-				{people.map((person) => (
-					<div key={person.idPessoa}>
-						<Person person={person} />
-						<button
-							onClick={() => {
-								handleEdit(person);
-							}}
-						>
-							Editar
-						</button>
-						<button id={person.idPessoa} onClick={handleDelete}>
-							Excluir
-						</button>
-					</div>
-				))}
-			</ul>
+			<Container>
+				<ul>
+					{people.map((person) => (
+						<PersonContainer key={person.idPessoa}>
+							<Person person={person} />
+							<div>
+								<button
+									onClick={() => {
+										handleEdit(person);
+									}}
+								>
+									Editar
+								</button>
+								<button
+									id={person.idPessoa}
+									onClick={() => {
+										confirmAlert({
+											title: 'Confirm to submit',
+											message: 'Are you sure to do this.',
+											buttons: [
+												{
+													label: 'Yes',
+													onClick: () => handleDelete(person.idPessoa),
+												},
+												{
+													label: 'No',
+													onClick: () => {
+														return;
+													},
+												},
+											],
+										});
+									}}
+								>
+									Excluir
+								</button>
+							</div>
+						</PersonContainer>
+					))}
+				</ul>
+			</Container>
 			<ToastContainer />
 		</div>
 	);

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from '../pages/Login';
+import Login from '../pages/login/Login';
 import { useContext } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import Users from '../pages/users/Users';

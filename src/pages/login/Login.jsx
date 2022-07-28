@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import { useContext } from 'react';
-import { AuthContext } from '../Context/AuthContext';
+import { AuthContext } from '../../Context/AuthContext';
 
 const Login = () => {
 	const { handleLogin } = useContext(AuthContext);
