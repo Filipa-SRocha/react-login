@@ -9,11 +9,8 @@ const UpdatePersonPage = () => {
 	const { getPerson } = useContext(PeopleContext);
 
 	const setup = async () => {
-		console.log('antes', id);
 		const personDetails = await getPerson(id);
-		console.log('depois');
 		setPerson(personDetails);
-		console.log(person);
 	};
 
 	useEffect(() => {

@@ -1,19 +1,24 @@
 import { createContext } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { apiDBC } from '../api';
+import { toast } from 'react-toastify';
 
 const PeopleContext = createContext();
 
 const PeopleContextProvider = ({ children }) => {
 	const navigate = useNavigate();
+
 	const handleDelete = async (id) => {
 		try {
 			await apiDBC.delete(`/pessoa/${id}`);
-			// toast.success('Pessoa removida com sucesso!');
-			// getPeople();
+			// window.location.reload(false);
+			toast.success('Pessoa removida com sucesso!');
+			navigate('/people');
+
+			return;
 		} catch (error) {
 			console.log('Erro =>', error);
-			// toast.error('Erro! Não foi possível concluir o seu pedido.');
+			toast.error('Erro! Não foi possível concluir o seu pedido.');
 		}
 	};
 
@@ -31,31 +36,26 @@ const PeopleContextProvider = ({ children }) => {
 	const handleRegister = async (values) => {
 		try {
 			await apiDBC.post('/pessoa', values);
-			console.log('Pessoa cadastrada com sucesso!');
 			navigate('/people');
-			// toast.success('Pessoa cadastrada com sucesso!');
+			toast.success('Pessoa cadastrada com sucesso!');
 		} catch (error) {
 			console.log('erro => ', error.response);
-			// toast.error('Erro no cadastro!');
+			toast.error('Erro no cadastro!');
 		}
 	};
 
 	const handleEdit = async (id) => {
-		//const { data } = await apiDBC.get(`/pessoa/lista-completa?idPessoa=${id}`);
-		//console.log(data);
-
 		navigate(`/people/update-person/${id}`);
-		// setisEditMode(true);
 	};
 
 	const applyChanges = async (id, updatedPerson) => {
 		try {
 			await apiDBC.put(`/pessoa/${id}`, updatedPerson);
-			//toast.success('Cadastro atualizado com sucesso!');
+			toast.success('Cadastro atualizado com sucesso!');
 			navigate('/people');
 		} catch (error) {
 			console.log('Erro => ', error);
-			//toast.error('Erro! Não foi possivel atualizar os dados!');
+			toast.error('Erro! Não foi possivel atualizar os dados!');
 		}
 	};
 
