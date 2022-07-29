@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import NumberFormat from 'react-number-format';
 import { useContext, useEffect, useState } from 'react';
 import { PeopleContext } from '../../../Context/PeopleContext';
+import { FormWrapper } from './peopleForm.styled';
 
 const PeopleForm = ({ isEditMode, id, personDetails }) => {
 	const { applyChanges, handleRegister } = useContext(PeopleContext);
@@ -65,68 +66,73 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 	});
 
 	return (
-		<Formik
-			enableReinitialize // missing piece!!
-			initialValues={initialValues}
-			validationSchema={RegisterSchema}
-			onSubmit={(values, { resetForm }) => {
-				handleSubmit(values);
-				resetForm();
-				return;
-			}}
-		>
-			{({ errors, touched }) => (
-				<Form>
-					<label htmlFor='nome'>Nome: </label>
-					<Field name='nome' />
-					{errors.nome && touched.nome ? <div>{errors.nome}</div> : null}
-					<label htmlFor='dataNascimento'>Data De Nascimento: </label>
-					<Field name='dataNascimento'>
-						{({ field, form, meta }) => (
-							<NumberFormat
-								{...field}
-								format='##-##-####'
-								placeholder='DD-MM-AAAA'
-								mask={['D', 'D', 'M', 'M', 'A', 'A', 'A', 'A']}
-								id='dataNascimento'
-								type='text'
-								className={
-									errors.phone && touched.phone
-										? 'text-input error'
-										: 'text-input'
-								}
-							/>
+		<FormWrapper>
+			<Formik
+				className={'formTest'}
+				enableReinitialize // missing piece!!
+				initialValues={initialValues}
+				validationSchema={RegisterSchema}
+				onSubmit={(values, { resetForm }) => {
+					handleSubmit(values);
+					resetForm();
+					return;
+				}}
+			>
+				{({ errors, touched }) => (
+					<Form>
+						<label htmlFor='nome'>Nome: </label>
+						<Field name='nome' />
+						{errors.nome && touched.nome ? <div>{errors.nome}</div> : null}
+						<label htmlFor='dataNascimento'>Data De Nascimento: </label>
+						<Field name='dataNascimento'>
+							{({ field, form, meta }) => (
+								<NumberFormat
+									{...field}
+									format='##-##-####'
+									placeholder='DD-MM-AAAA'
+									mask={['D', 'D', 'M', 'M', 'A', 'A', 'A', 'A']}
+									id='dataNascimento'
+									type='text'
+									className={
+										errors.phone && touched.phone
+											? 'text-input error'
+											: 'text-input'
+									}
+								/>
+							)}
+						</Field>
+						{errors.dataNascimento && touched.dataNascimento ? (
+							<div>{errors.dataNascimento}</div>
+						) : null}
+						<label htmlFor='cpf'>CPF: </label>
+						<Field name='cpf'>
+							{({ field, form, meta }) => (
+								<NumberFormat
+									{...field}
+									format='###.###.###-##'
+									id='cpf'
+									type='text'
+									className={
+										errors.cpf && touched.cpf
+											? 'text-input error'
+											: 'text-input'
+									}
+								/>
+							)}
+						</Field>
+						{errors.cpf && touched.cpf ? <div>{errors.cpf}</div> : null}
+						<label htmlFor='email'>E-mail: </label>
+						<Field name='email' />
+						{errors.email && touched.email ? <div>{errors.email}</div> : null}
+						{isEditMode ? (
+							<button type='submit'>Editar</button>
+						) : (
+							<button type='submit'>Cadastrar</button>
 						)}
-					</Field>
-					{errors.dataNascimento && touched.dataNascimento ? (
-						<div>{errors.dataNascimento}</div>
-					) : null}
-					<label htmlFor='cpf'>CPF: </label>
-					<Field name='cpf'>
-						{({ field, form, meta }) => (
-							<NumberFormat
-								{...field}
-								format='###.###.###-##'
-								id='cpf'
-								type='text'
-								className={
-									errors.cpf && touched.cpf ? 'text-input error' : 'text-input'
-								}
-							/>
-						)}
-					</Field>
-					{errors.cpf && touched.cpf ? <div>{errors.cpf}</div> : null}
-					<label htmlFor='email'>E-mail: </label>
-					<Field name='email' />
-					{errors.email && touched.email ? <div>{errors.email}</div> : null}
-					{isEditMode ? (
-						<button type='submit'>Editar</button>
-					) : (
-						<button type='submit'>Cadastrar</button>
-					)}
-				</Form>
-			)}
-		</Formik>
+					</Form>
+				)}
+			</Formik>
+		</FormWrapper>
 	);
 };
 export default PeopleForm;
