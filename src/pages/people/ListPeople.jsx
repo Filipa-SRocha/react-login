@@ -1,4 +1,4 @@
-import { Container, PersonContainer } from './People.styled';
+import { Container, PersonContainer, ButtonContainer } from './People.styled';
 import Person from './Person';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -14,7 +14,7 @@ const ListPeople = ({ people }) => {
 				{people.map((person) => (
 					<PersonContainer key={person.idPessoa}>
 						<Person person={person} />
-						<div>
+						<ButtonContainer>
 							<button
 								onClick={() => {
 									handleEdit(person.idPessoa);
@@ -45,7 +45,7 @@ const ListPeople = ({ people }) => {
 							>
 								Excluir
 							</button>
-						</div>
+						</ButtonContainer>
 					</PersonContainer>
 				))}
 			</ul>
