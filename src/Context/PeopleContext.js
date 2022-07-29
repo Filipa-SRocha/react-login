@@ -2,11 +2,23 @@ import { createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiDBC } from '../api';
 import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 const PeopleContext = createContext();
 
 const PeopleContextProvider = ({ children }) => {
 	const navigate = useNavigate();
+	const [people, setPeople] = useState([]);
+
+	const getPeople = async () => {
+		try {
+			const { data } = await apiDBC.get('/pessoa');
+			setPeople(data.content);
+			return;
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const handleDelete = async (id) => {
 		try {
@@ -14,6 +26,7 @@ const PeopleContextProvider = ({ children }) => {
 			// window.location.reload(false);
 			toast.success('Pessoa removida com sucesso!');
 			navigate('/people');
+			getPeople();
 
 			return;
 		} catch (error) {
@@ -68,6 +81,8 @@ const PeopleContextProvider = ({ children }) => {
 				getPerson,
 				applyChanges,
 				handleRegister,
+				getPeople,
+				people,
 			}}
 		>
 			{children}
