@@ -15,10 +15,13 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 
 	const setup = () => {
 		if (isEditMode) {
-			console.log('initial values test');
+			let novaData;
+			if (personDetails && personDetails.dataNascimento) {
+				novaData = personDetails.dataNascimento.split('-').reverse().join('-');
+			}
 			setInitialValues({
 				nome: personDetails.nome,
-				dataNascimento: personDetails.dataNascimento,
+				dataNascimento: personDetails.dataNascimento && novaData,
 				cpf: personDetails.cpf,
 				email: personDetails.email,
 			});
@@ -29,13 +32,35 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 		setup();
 	}, [personDetails]);
 
+	const removeInputMasks = (person) => {
+		person.cpf =
+			person.cpf.slice(0, 3) +
+			person.cpf.slice(4, 7) +
+			person.cpf.slice(8, 11) +
+			person.cpf.slice(12, 14);
+
+		person.dataNascimento =
+			person.dataNascimento.slice(-4) +
+			'-' +
+			person.dataNascimento.slice(3, 5) +
+			'-' +
+			person.dataNascimento.slice(0, 2);
+
+		return person;
+	};
+
+	const handleSubmit = (values) => {
+		const newPerson = removeInputMasks(values);
+		isEditMode ? applyChanges(id, newPerson) : handleRegister(newPerson);
+	};
+
 	const RegisterSchema = Yup.object().shape({
 		nome: Yup.string()
 			.min(2, 'Nome precisa de, no mínimo, 2 caracteres')
 			.max(100, 'Nome demasiado grande!')
 			.required('Nome obrigatório'),
 		dataNascimento: Yup.string().required('Campo obrigatório'),
-		cpf: Yup.string().required('Campo obrigratório').max(11, 'Cpf inválido'),
+		cpf: Yup.string().required('Campo obrigratório').max(20, 'Cpf inválido'),
 		email: Yup.string().email().required('Campo obrigratório'),
 	});
 
@@ -45,7 +70,7 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 			initialValues={initialValues}
 			validationSchema={RegisterSchema}
 			onSubmit={(values, { resetForm }) => {
-				isEditMode ? applyChanges(id, values) : handleRegister(values);
+				handleSubmit(values);
 				resetForm();
 				return;
 			}}
@@ -56,14 +81,13 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 					<Field name='nome' />
 					{errors.nome && touched.nome ? <div>{errors.nome}</div> : null}
 					<label htmlFor='dataNascimento'>Data De Nascimento: </label>
-					<Field
-						name='dataNascimento'
-						render={({ field }) => (
+					<Field name='dataNascimento'>
+						{({ field, form, meta }) => (
 							<NumberFormat
 								{...field}
-								format='####-##-##'
-								placeholder='YYYY-MM-DD'
-								mask={['Y', 'Y', 'Y', 'Y', 'M', 'M', 'D', 'D']}
+								format='##-##-####'
+								placeholder='DD-MM-AAAA'
+								mask={['D', 'D', 'M', 'M', 'A', 'A', 'A', 'A']}
 								id='dataNascimento'
 								type='text'
 								className={
@@ -73,12 +97,24 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 								}
 							/>
 						)}
-					/>
+					</Field>
 					{errors.dataNascimento && touched.dataNascimento ? (
 						<div>{errors.dataNascimento}</div>
 					) : null}
 					<label htmlFor='cpf'>CPF: </label>
-					<Field name='cpf' />
+					<Field name='cpf'>
+						{({ field, form, meta }) => (
+							<NumberFormat
+								{...field}
+								format='###.###.###-##'
+								id='cpf'
+								type='text'
+								className={
+									errors.cpf && touched.cpf ? 'text-input error' : 'text-input'
+								}
+							/>
+						)}
+					</Field>
 					{errors.cpf && touched.cpf ? <div>{errors.cpf}</div> : null}
 					<label htmlFor='email'>E-mail: </label>
 					<Field name='email' />

@@ -36,6 +36,7 @@ const PeopleContextProvider = ({ children }) => {
 	const handleRegister = async (values) => {
 		try {
 			await apiDBC.post('/pessoa', values);
+
 			navigate('/people');
 			toast.success('Pessoa cadastrada com sucesso!');
 		} catch (error) {
