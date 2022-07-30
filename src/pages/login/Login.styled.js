@@ -22,13 +22,29 @@ export const FormLoginContainer = styled.div`
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+
+	> div:last-of-type {
+		width: 100%;
+		text-align: center;
+		margin-top: 14px;
+		a {
+			color: black;
+		}
+		&:hover {
+			text-decoration: underline;
+		}
+
+		span {
+			color: ${primaryColor};
+		}
+	}
 `;
 
 export const FormLogin = styled.form`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	margin-top: 60px;
+	margin-top: 38px;
 	color: ${secondaryColor};
 
 	label {
@@ -38,6 +54,7 @@ export const FormLogin = styled.form`
 
 	input {
 		margin-bottom: 20px;
+		width: 100%;
 		padding: 6px;
 		background-color: #fcfdfe;
 		border: 1px solid #f0f1f7;
@@ -46,18 +63,18 @@ export const FormLogin = styled.form`
 		color: #4b506d;
 	}
 
-	button {
-		background-color: ${primaryColor};
-		color: white;
-		width: 100%;
-		height: 48px;
-		box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
-		border-radius: 8px;
-		border: none;
-	}
-
-	button:hover {
-		background-color: ${primaryColorHover};
+	div {
+		button {
+			width: 20px;
+			height: 20px;
+			position: relative;
+			top: -46px;
+			right: -260px;
+			background-color: transparent;
+			color: grey;
+			border: none;
+			cursor: pointer;
+		}
 	}
 `;
 

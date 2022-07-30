@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from '../pages/login/Login';
 import { useContext } from 'react';
 import { AuthContext } from '../Context/AuthContext';
-import Users from '../pages/users/Users';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import People from '../pages/people/People';
@@ -12,6 +11,7 @@ import { PeopleContextProvider } from '../Context/PeopleContext';
 import RegisterPerson from '../pages/people/registerPerson/RegisterPerson';
 import { GlobalStyle } from '../globalStyles.styled';
 import UpdatePersonPage from '../pages/people/updatePersonPage/UpdatePersonPage';
+import NewAccount from '../pages/login/NewAccount';
 
 const Router = () => {
 	const { isLogged } = useContext(AuthContext);
@@ -38,7 +38,7 @@ const Router = () => {
 					) : (
 						<>
 							<Route path='/' element={<Login />} />
-							<Route path='/users' element={<Users />} />
+							<Route path='/new-account' element={<NewAccount />} />
 						</>
 					)}
 					<Route path='*' element={<NotFound />} />

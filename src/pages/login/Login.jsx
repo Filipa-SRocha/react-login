@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
 import {
 	FormLogin,
@@ -9,9 +10,13 @@ import {
 	LogoImg,
 } from './Login.styled';
 import Logo from '../../images/logoImg.png';
+import { BsEyeSlash } from 'react-icons/bs';
+import { BsEye } from 'react-icons/bs';
+import PrimaryButton from '../../components/button/Buttons';
 
 const Login = () => {
 	const { handleLogin } = useContext(AuthContext);
+	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
 	const formik = useFormik({
 		initialValues: {
@@ -24,6 +29,12 @@ const Login = () => {
 			handleLogin(values);
 		},
 	});
+
+	const changePasswordVisibility = () => {
+		isPasswordVisible
+			? setIsPasswordVisible(false)
+			: setIsPasswordVisible(true);
+	};
 
 	return (
 		<LoginContainer>
@@ -47,17 +58,27 @@ const Login = () => {
 					/>
 
 					<label htmlFor='senha'>PASSWORD: </label>
-					<input
-						id='senha'
-						name='senha'
-						type='password'
-						placeholder='Password'
-						onChange={formik.handleChange}
-						value={formik.values.senha}
-					/>
+					<div>
+						<input
+							id='senha'
+							name='senha'
+							type={isPasswordVisible ? 'text' : 'password'}
+							placeholder='Password'
+							onChange={formik.handleChange}
+							value={formik.values.senha}
+						/>
+						<button type='button' onClick={changePasswordVisibility}>
+							{isPasswordVisible ? <BsEye /> : <BsEyeSlash />}
+						</button>
+					</div>
 
-					<button type='submit'>Login</button>
+					<PrimaryButton text='Login' />
 				</FormLogin>
+				<div>
+					<Link to='/new-account'>
+						Ainda não tem conta?<span> Cadastre-se</span>
+					</Link>
+				</div>
 			</FormLoginContainer>
 		</LoginContainer>
 	);

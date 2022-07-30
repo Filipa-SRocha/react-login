@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import ListPeople from './ListPeople';
 import { PeopleContext } from '../../Context/PeopleContext';
+import { AddressContextProvider } from '../../Context/AddressContext';
 
 const People = () => {
 	const { people, getPeople } = useContext(PeopleContext);
@@ -18,12 +19,14 @@ const People = () => {
 
 	return (
 		<div>
-			<button onClick={handleRegister}>Cadastrar</button>
+			<AddressContextProvider>
+				<button onClick={handleRegister}>Cadastrar</button>
 
-			{/* Lista de Pessoas */}
-			<ListPeople people={people} />
+				{/* Lista de Pessoas */}
+				<ListPeople people={people} />
 
-			<ToastContainer />
+				<ToastContainer />
+			</AddressContextProvider>
 		</div>
 	);
 };

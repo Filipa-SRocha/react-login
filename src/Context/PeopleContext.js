@@ -14,6 +14,7 @@ const PeopleContextProvider = ({ children }) => {
 		try {
 			const { data } = await apiDBC.get('/pessoa');
 			setPeople(data.content);
+			console.log(data.content);
 			return;
 		} catch (error) {
 			console.log(error);

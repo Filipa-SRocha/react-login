@@ -50,10 +50,12 @@ const Address = () => {
 			<Formik
 				initialValues={{
 					cep: '',
+					tipo: '',
 					logradouro: '',
 					complemento: '',
 					bairro: '',
 					estado: '',
+					pais: '',
 				}}
 				validationSchema={SignupSchema}
 				onSubmit={(values) => {
@@ -84,6 +86,10 @@ const Address = () => {
 
 						{errors.cep && touched.cep ? <div>{errors.cep}</div> : null}
 
+						<label htmlFor='tipo'>Tipo: </label>
+						<Field name='tipo' />
+						{errors.tipo && touched.tipo ? <div>{errors.tipo}</div> : null}
+
 						<label htmlFor='logradouro'>Logradouro</label>
 						<Field name='logradouro' />
 						{errors.logradouro && touched.logradouro ? (
@@ -107,6 +113,10 @@ const Address = () => {
 						{errors.estado && touched.estado ? (
 							<div>{errors.estado}</div>
 						) : null}
+
+						<label htmlFor='pais'>País: </label>
+						<Field name='pais' />
+						{errors.pais && touched.pais ? <div>{errors.pais}</div> : null}
 
 						<button type='submit'>Cadastrar Endereço</button>
 					</Form>
