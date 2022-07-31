@@ -4,59 +4,66 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useContext } from 'react';
 import { PeopleContext } from '../../Context/PeopleContext';
-import { AddressContext } from '../../Context/AddressContext';
+import { useNavigate } from 'react-router-dom';
+
+import AddressContainer from './components/addressAccordeon/AddressContainer';
 
 const ListPeople = ({ people }) => {
 	const { handleDelete, handleEdit } = useContext(PeopleContext);
-	const { createAddress } = useContext(AddressContext);
+	const navigate = useNavigate();
 
 	return (
 		<Container>
 			<ul>
 				{people.map((person) => (
-					<PersonContainer key={person.idPessoa}>
-						<Person person={person} />
-						<ButtonContainer>
-							<button
-								onClick={() => {
-									handleEdit(person.idPessoa);
-								}}
-							>
-								Editar
-							</button>
-							<button
-								id={person.idPessoa}
-								onClick={() => {
-									confirmAlert({
-										title: 'Eliminar',
-										message: `Quer mesmo eliminar ${person.nome}?`,
-										buttons: [
-											{
-												label: 'Sim',
-												onClick: () => handleDelete(person.idPessoa),
-											},
-											{
-												label: 'Não',
-												onClick: () => {
-													return;
+					<>
+						<PersonContainer key={person.idPessoa}>
+							<Person person={person} />
+
+							<p>lal</p>
+							<ButtonContainer>
+								<button
+									onClick={() => {
+										handleEdit(person.idPessoa);
+									}}
+								>
+									Editar
+								</button>
+								<button
+									id={person.idPessoa}
+									onClick={() => {
+										confirmAlert({
+											title: 'Eliminar',
+											message: `Quer mesmo eliminar ${person.nome}?`,
+											buttons: [
+												{
+													label: 'Sim',
+													onClick: () => handleDelete(person.idPessoa),
 												},
-											},
-										],
-									});
+												{
+													label: 'Não',
+													onClick: () => {
+														return;
+													},
+												},
+											],
+										});
+									}}
+								>
+									Excluir
+								</button>
+							</ButtonContainer>
+							<button
+								onClick={() => {
+									navigate(`/new-address/${person.idPessoa}`);
 								}}
 							>
-								Excluir
+								{' '}
+								Endereço
 							</button>
-						</ButtonContainer>
-						<button
-							onClick={() => {
-								createAddress(person.idPessoa);
-							}}
-						>
-							{' '}
-							Endereço
-						</button>
-					</PersonContainer>
+						</PersonContainer>
+						<AddressContainer idPessoa={person.idPessoa} />
+					</>
 				))}
 			</ul>
 		</Container>

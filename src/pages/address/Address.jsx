@@ -1,36 +1,49 @@
 import { useFormikContext, Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { apiCep } from '../../api';
 import NumberFormat from 'react-number-format';
+import { AddressContext } from '../../Context/AddressContext';
 
-const Address = () => {
+const Address = ({ idPessoa, AddressToEdit }) => {
+	const { createAddress, isEditMode } = useContext(AddressContext);
+
 	const handleCep = async (values) => {
-		const cep = values.cep.slice(0, 5) + values.cep.slice(6);
-		try {
-			const { data } = await apiCep.get(`/${cep}/json/`);
-
-			values.bairro = data.bairro;
-			values.logradouro = data.logradouro;
-			values.estado = data.uf;
-			values.complemento = data.complemento;
-		} catch (error) {
-			console.log(error);
-		}
+		// const cep = values.cep.slice(0, 5) + values.cep.slice(6);
+		// try {
+		// 	const { data } = await apiCep.get(`/${cep}/json/`);
+		// 	values.logradouro = data.logradouro;
+		// 	values.estado = data.uf;
+		// 	values.complemento = data.complemento;
+		// } catch (error) {
+		// 	console.log(error);
+		// }
 	};
 
 	const GetCep = () => {
-		const { values } = useFormikContext();
-
-		useEffect(() => {
-			if (!values.cep.includes('_')) {
-				handleCep(values);
-			}
-		}, [values.cep]);
+		// const { values } = useFormikContext();
+		// useEffect(() => {
+		// 	if (!values.cep.includes('_')) {
+		// 		handleCep(values);
+		// 	}
+		// }, [values.cep]);
 	};
 
 	const handleAddress = (values) => {
-		//cadastrar endereço
+		const newCep = values.cep.replaceAll('-', '');
+		const newAddress = {
+			idPessoa: parseInt(idPessoa),
+			tipo: 'COMERCIAL',
+			logradouro: values.logradouro,
+			numero: parseInt(values.numero),
+			complemento: values.complemento,
+			cep: newCep,
+			cidade: values.cidade,
+			estado: values.estado,
+			pais: values.pais,
+		};
+
+		createAddress(newAddress);
 	};
 
 	const SignupSchema = Yup.object().shape({
@@ -39,7 +52,6 @@ const Address = () => {
 			.max(14, 'cep inválido!')
 			.required('Cep Obrigatório'),
 		logradouro: Yup.string().required('Campo obrigratório'),
-		bairro: Yup.string().required('Campo obrigratório'),
 		estado: Yup.string().required('Campo obrigratório'),
 	});
 
@@ -49,13 +61,16 @@ const Address = () => {
 
 			<Formik
 				initialValues={{
-					cep: '',
-					tipo: '',
-					logradouro: '',
-					complemento: '',
-					bairro: '',
-					estado: '',
-					pais: '',
+					tipo: isEditMode && AddressToEdit ? AddressToEdit.tipo : '',
+					logradouro:
+						isEditMode && AddressToEdit ? AddressToEdit.logradouro : '',
+					numero: isEditMode && AddressToEdit ? AddressToEdit.numero : '',
+					complemento:
+						isEditMode && AddressToEdit ? AddressToEdit.complemento : '',
+					cep: isEditMode && AddressToEdit ? AddressToEdit.cep : '',
+					cidade: isEditMode && AddressToEdit ? AddressToEdit.cidade : '',
+					estado: isEditMode && AddressToEdit ? AddressToEdit.estado : '',
+					pais: isEditMode && AddressToEdit ? AddressToEdit.pais : '',
 				}}
 				validationSchema={SignupSchema}
 				onSubmit={(values) => {
@@ -65,9 +80,8 @@ const Address = () => {
 				{({ errors, touched }) => (
 					<Form>
 						<label htmlFor='cep'>CEP: </label>
-						<Field
-							name='cep'
-							render={({ field }) => (
+						<Field name='cep'>
+							{({ field, form, meta }) => (
 								<NumberFormat
 									{...field}
 									format='#####-###'
@@ -81,7 +95,7 @@ const Address = () => {
 									}
 								/>
 							)}
-						/>
+						</Field>
 						<GetCep />
 
 						{errors.cep && touched.cep ? <div>{errors.cep}</div> : null}
@@ -96,16 +110,22 @@ const Address = () => {
 							<div>{errors.logradouro}</div>
 						) : null}
 
+						<label htmlFor='numero'>Numero: </label>
+						<Field name='numero' />
+						{errors.numero && touched.numero ? (
+							<div>{errors.numero}</div>
+						) : null}
+
 						<label htmlFor='complemento'>Complemento: </label>
 						<Field name='complemento' />
 						{errors.complemento && touched.complemento ? (
 							<div>{errors.complemento}</div>
 						) : null}
 
-						<label htmlFor='bairro'>Bairro: </label>
-						<Field name='bairro' />
-						{errors.bairro && touched.bairro ? (
-							<div>{errors.bairro}</div>
+						<label htmlFor='cidade'>Cidade: </label>
+						<Field name='cidade' />
+						{errors.cidade && touched.cidade ? (
+							<div>{errors.cidade}</div>
 						) : null}
 
 						<label htmlFor='estado'>Estado: </label>
