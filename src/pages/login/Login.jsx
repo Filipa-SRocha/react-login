@@ -12,7 +12,7 @@ import {
 import Logo from '../../images/logoImg.png';
 import { BsEyeSlash } from 'react-icons/bs';
 import { BsEye } from 'react-icons/bs';
-import PrimaryButton from '../../components/button/Buttons';
+import { PrimaryButton } from '../../components/button/Buttons';
 
 const Login = () => {
 	const { handleLogin } = useContext(AuthContext);

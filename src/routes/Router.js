@@ -56,7 +56,7 @@ const Router = () => {
 					</Routes>
 				</AddressContextProvider>
 			</PeopleContextProvider>
-			<Footer />
+			{/* <Footer /> */}
 		</BrowserRouter>
 	);
 };

@@ -13,7 +13,7 @@ import {
 	FormContainer,
 } from './Login.styled';
 import Logo from '../../images/logoImg.png';
-import PrimaryButton from '../../components/button/Buttons';
+import { PrimaryButton } from '../../components/button/Buttons';
 
 const NewAccount = () => {
 	YupPassword(Yup);

@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.section`
 	background-color: white;
-	max-width: 1200px;
+	max-width: 960px;
 	margin: 0 auto;
+	margin-left: 240px;
 `;
 
 export const PersonContainer = styled.li`
