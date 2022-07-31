@@ -1,20 +1,33 @@
 import styled from 'styled-components';
+import { secondaryColor } from '../../consts';
 
-export const Container = styled.section`
-	background-color: white;
+export const PageContainer = styled.section`
 	max-width: 960px;
 	margin: 0 auto;
 	margin-left: 240px;
 `;
 
-export const PersonContainer = styled.li`
+export const Container = styled.section``;
+
+export const ListItemContainer = styled.li`
 	list-style: none;
 	display: flex;
-	/* flex-direction: column; */
+	flex-direction: column;
 	align-items: center;
 	padding: 8px;
-	height: 80px;
+	min-height: 200px;
+	max-height: 400px;
+	width: 100%;
 	border: 1px solid grey;
+`;
+
+export const PersonContainer = styled.div`
+	width: 100%;
+	display: grid;
+	height: 80px;
+	padding-bottom: 10px;
+	grid-template-columns: 4fr 1fr;
+	border-bottom: 1px solid ${secondaryColor};
 `;
 
 export const ButtonContainer = styled.div`
@@ -28,6 +41,13 @@ export const ButtonContainer = styled.div`
 		height: 24px;
 		width: 80px;
 	}
+`;
+
+export const AddressesContainer = styled.div`
+	padding: 10px;
+
+	display: flex;
+	width: 100%;
 `;
 
 export const PersonInfoContainer = styled.div`

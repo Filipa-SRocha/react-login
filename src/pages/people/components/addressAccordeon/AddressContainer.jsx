@@ -3,7 +3,7 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { AiOutlineDown } from 'react-icons/ai';
 
 import { AddressContext } from '../../../../Context/AddressContext';
-import { AddressContent } from './AddressContainer.styled';
+import { AddressContent, AddressTitle } from './AddressContainer.styled';
 
 import { PersonAddress } from './PersonAddress';
 
@@ -26,10 +26,11 @@ const AddressContainer = ({ idPessoa }) => {
 	}, []);
 
 	return (
-		<div>
-			<div onClick={toggleAccordeon}>
+		<>
+			<AddressTitle onClick={toggleAccordeon}>
 				<AiOutlineHome /> <h3>Endereço</h3> <AiOutlineDown />
-			</div>
+			</AddressTitle>
+
 			<AddressContent className={isOpen ? 'show' : ''}>
 				{addressArray.length > 0 ? (
 					<ul>
@@ -50,7 +51,7 @@ const AddressContainer = ({ idPessoa }) => {
 					</>
 				)}
 			</AddressContent>
-		</div>
+		</>
 	);
 };
 export default AddressContainer;

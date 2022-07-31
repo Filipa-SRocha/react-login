@@ -22,3 +22,21 @@ export const Button = styled.button`
 			props.secondary ? '#c9c9c9 ' : { primaryColorHover }};
 	}
 `;
+
+export const SmallButton = styled.div`
+	min-width: 50px;
+	min-width: fit-content;
+	max-width: 200px;
+	padding: 4px 8px;
+	height: 32px;
+	font-size: 14px;
+	border-radius: 8px;
+	border: 2px solid
+		${(props) => (props.borderColor ? props.borderColor : 'gray')};
+	background-color: ${(props) => (props.color ? props.color : 'transparent')};
+	cursor: pointer;
+
+	&:hover {
+		background-color: grey;
+	}
+`;

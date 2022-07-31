@@ -3,6 +3,8 @@ import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import ListPeople from './ListPeople';
 import { PeopleContext } from '../../Context/PeopleContext';
+import { PageContainer } from './People.styled';
+import { PrimaryButton } from '../../components/button/Buttons';
 
 const People = () => {
 	const { people, getPeople } = useContext(PeopleContext);
@@ -17,14 +19,14 @@ const People = () => {
 	};
 
 	return (
-		<section>
-			<button onClick={handleRegister}>Cadastrar</button>
+		<PageContainer>
+			<PrimaryButton text='Cadastrar' onClick={handleRegister} />
 
 			{/* Lista de Pessoas */}
 			<ListPeople people={people} />
 
 			<ToastContainer />
-		</section>
+		</PageContainer>
 	);
 };
 export default People;

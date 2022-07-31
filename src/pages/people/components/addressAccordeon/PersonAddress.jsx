@@ -8,6 +8,8 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { BiEditAlt } from 'react-icons/bi';
 import { AiOutlineClose } from 'react-icons/ai';
 
+import { PersonAddressContainer } from './AddressContainer.styled';
+
 const PersonAddress = ({ address, setup, idPessoa }) => {
 	const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ const PersonAddress = ({ address, setup, idPessoa }) => {
 
 	return (
 		<li>
-			<div>
+			<PersonAddressContainer>
 				{address.tipo === 'COMERCIAL' ? (
 					<MdHomeRepairService />
 				) : (
@@ -38,7 +40,7 @@ const PersonAddress = ({ address, setup, idPessoa }) => {
 				<small>
 					{address.cep} {address.cidade}, {address.estado}, {address.pais}
 				</small>
-			</div>
+			</PersonAddressContainer>
 
 			<div>
 				<button onClick={handleDelete}>
