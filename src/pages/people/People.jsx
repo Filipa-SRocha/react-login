@@ -17,14 +17,14 @@ const People = () => {
 	};
 
 	return (
-		<div>
+		<section>
 			<button onClick={handleRegister}>Cadastrar</button>
 
 			{/* Lista de Pessoas */}
 			<ListPeople people={people} />
 
 			<ToastContainer />
-		</div>
+		</section>
 	);
 };
 export default People;

@@ -4,9 +4,16 @@ import YupPassword from 'yup-password';
 import { AiOutlineLock } from 'react-icons/ai';
 import { AiOutlineUnlock } from 'react-icons/ai';
 import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
-import { FormLogin, LogoContainer, FormLoginContainer } from './Login.styled';
+import {
+	PageContainer,
+	FormLogin,
+	LogoContainer,
+	FormContainer,
+} from './Login.styled';
 import Logo from '../../images/logoImg.png';
+import PrimaryButton from '../../components/button/Buttons';
 
 const NewAccount = () => {
 	YupPassword(Yup);
@@ -28,41 +35,50 @@ const NewAccount = () => {
 	});
 
 	return (
-		<FormLoginContainer>
-			<LogoContainer>
-				<img src={Logo} alt='Logo' />
-				<h1>Dashboard Kit</h1>
-				<p>Create New Account</p>
-			</LogoContainer>
+		<PageContainer>
+			<FormContainer>
+				<LogoContainer>
+					<img src={Logo} alt='Logo' />
 
-			<Formik
-				initialValues={{
-					login: '',
-					senha: '',
-				}}
-				validationSchema={SignupSchema}
-				onSubmit={(values) => {
-					handleSignUp(values);
-				}}
-			>
-				{({ errors, touched }) => (
-					<FormLogin>
-						<label htmlFor='login'>Login: </label>
-						<Field name='login' />
-						{errors.login && touched.login ? <div>{errors.login}</div> : null}
+					<h1>Dashboard Kit</h1>
+					<p>Create New Account</p>
+					<p>Escolha um nome de usuário e uma senha</p>
+				</LogoContainer>
 
-						<label htmlFor='senha'>Senha</label>
+				<Formik
+					initialValues={{
+						login: '',
+						senha: '',
+					}}
+					validationSchema={SignupSchema}
+					onSubmit={(values) => {
+						handleSignUp(values);
+					}}
+				>
+					{({ errors, touched }) => (
+						<FormLogin>
+							<label htmlFor='login'>LOGIN: </label>
+							<Field name='login' placeholder='Nome de usuário' />
+							{errors.login && touched.login ? <div>{errors.login}</div> : null}
 
-						<div>
-							<Field name='senha' type='password' />
-						</div>
-						{errors.senha && touched.senha ? <div>{errors.senha}</div> : null}
+							<label htmlFor='senha'>SENHA: </label>
 
-						<button type='submit'>Cadastrar</button>
-					</FormLogin>
-				)}
-			</Formik>
-		</FormLoginContainer>
+							<div>
+								<Field name='senha' type='password' placeholder='Senha' />
+							</div>
+							{errors.senha && touched.senha ? <div>{errors.senha}</div> : null}
+
+							<PrimaryButton type='submit' text='Cadastrar' />
+						</FormLogin>
+					)}
+				</Formik>
+				<div>
+					<Link to='/' className={'testing'}>
+						Já tem uma conta?<span> Faça Login</span>
+					</Link>
+				</div>
+			</FormContainer>
+		</PageContainer>
 	);
 };
 export default NewAccount;

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
 import {
 	FormLogin,
-	FormLoginContainer,
-	LoginContainer,
+	FormContainer,
+	PageContainer,
 	LogoContainer,
 	LogoImg,
 } from './Login.styled';
@@ -37,8 +37,8 @@ const Login = () => {
 	};
 
 	return (
-		<LoginContainer>
-			<FormLoginContainer>
+		<PageContainer>
+			<FormContainer>
 				<LogoContainer>
 					<img src={Logo} alt='Logo' />
 					<h1>Dashboard Kit</h1>
@@ -57,13 +57,13 @@ const Login = () => {
 						value={formik.values.login}
 					/>
 
-					<label htmlFor='senha'>PASSWORD: </label>
+					<label htmlFor='senha'>SENHA: </label>
 					<div>
 						<input
 							id='senha'
 							name='senha'
 							type={isPasswordVisible ? 'text' : 'password'}
-							placeholder='Password'
+							placeholder='Senha'
 							onChange={formik.handleChange}
 							value={formik.values.senha}
 						/>
@@ -79,8 +79,8 @@ const Login = () => {
 						Ainda não tem conta?<span> Cadastre-se</span>
 					</Link>
 				</div>
-			</FormLoginContainer>
-		</LoginContainer>
+			</FormContainer>
+		</PageContainer>
 	);
 };
 export default Login;

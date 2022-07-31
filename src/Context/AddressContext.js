@@ -19,6 +19,8 @@ function AddressContextProvider({ children }) {
 	// };
 
 	async function createAddress(address) {
+		console.log('inside create');
+		console.log(address);
 		try {
 			console.log(address);
 			const { data } = await apiDBC.post(

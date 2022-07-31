@@ -8,6 +8,7 @@ import Address from './Address';
 const UpdateAddressPage = () => {
 	const { idEndereco } = useParams();
 	const { getAddressByAddressId } = useContext(AddressContext);
+
 	const [addressToEdit, setAddressToEdit] = useState({});
 
 	const setup = async () => {
@@ -21,7 +22,7 @@ const UpdateAddressPage = () => {
 
 	return (
 		<div>
-			<Address adressToEdit={addressToEdit} />
+			<Address addressToEdit={addressToEdit} idEndereco={idEndereco} />
 		</div>
 	);
 };

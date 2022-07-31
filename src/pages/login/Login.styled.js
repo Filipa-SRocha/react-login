@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { Formik } from 'formik';
 import { secondaryColor, primaryColor, primaryColorHover } from '../../consts';
 
-export const LoginContainer = styled.div`
+export const PageContainer = styled.div`
 	width: 100vw;
 	height: 100vh;
 	position: absolute;
@@ -12,7 +13,9 @@ export const LoginContainer = styled.div`
 	justify-content: center;
 `;
 
-export const FormLoginContainer = styled.div`
+export const FormContainer = styled.div.attrs((props) => ({
+	className: props.className,
+}))`
 	padding: 32px;
 	background-color: white;
 	width: 360px;
@@ -47,7 +50,8 @@ export const FormLogin = styled.form`
 	margin-top: 38px;
 	color: ${secondaryColor};
 
-	label {
+	label,
+	& label {
 		margin-bottom: 6px;
 		font-size: 12px;
 	}
@@ -81,6 +85,7 @@ export const FormLogin = styled.form`
 export const LogoContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	height: 200px;
 	align-items: center;
 	img {
 		width: 72px;

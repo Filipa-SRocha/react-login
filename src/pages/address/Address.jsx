@@ -4,9 +4,44 @@ import { useEffect, useContext } from 'react';
 import { apiCep } from '../../api';
 import NumberFormat from 'react-number-format';
 import { AddressContext } from '../../Context/AddressContext';
+import { useState } from 'react';
 
-const Address = ({ idPessoa, AddressToEdit }) => {
-	const { createAddress, isEditMode } = useContext(AddressContext);
+const Address = ({ idPessoa, addressToEdit, idEndereco }) => {
+	const {
+		createAddress,
+		isEditMode,
+		setIsEditMode,
+		updateAddress,
+		getAddressByAddressId,
+	} = useContext(AddressContext);
+
+	const [initialValues, setInitialValues] = useState({
+		tipo: '',
+		logradouro: '',
+		numero: '2',
+		complemento: '',
+		cep: '',
+		cidade: '',
+		estado: '',
+		pais: '',
+	});
+
+	const setup = async () => {
+		console.log('dentro do setup');
+		const { data } = await getAddressByAddressId(idEndereco);
+		setInitialValues({
+			...data,
+		});
+		console.log('initial adress', initialValues);
+		console.log('editmode', isEditMode);
+	};
+
+	useEffect(() => {
+		if (isEditMode && idEndereco) {
+			console.log('era para entrar no setup');
+			setup();
+		}
+	}, [addressToEdit, isEditMode]);
 
 	const handleCep = async (values) => {
 		// const cep = values.cep.slice(0, 5) + values.cep.slice(6);
@@ -29,7 +64,17 @@ const Address = ({ idPessoa, AddressToEdit }) => {
 		// }, [values.cep]);
 	};
 
-	const handleAddress = (values) => {
+	const handleSubmit = (values) => {
+		const cleanAddress = cleanInputs(values);
+		if (isEditMode) {
+			setIsEditMode(false);
+			updateAddress(values, cleanAddress);
+			return;
+		}
+		createAddress(cleanAddress);
+	};
+
+	const cleanInputs = (values) => {
 		const newCep = values.cep.replaceAll('-', '');
 		const newAddress = {
 			idPessoa: parseInt(idPessoa),
@@ -42,8 +87,7 @@ const Address = ({ idPessoa, AddressToEdit }) => {
 			estado: values.estado,
 			pais: values.pais,
 		};
-
-		createAddress(newAddress);
+		return newAddress;
 	};
 
 	const SignupSchema = Yup.object().shape({
@@ -60,21 +104,11 @@ const Address = ({ idPessoa, AddressToEdit }) => {
 			<h1>Cadastro de Endereço</h1>
 
 			<Formik
-				initialValues={{
-					tipo: isEditMode && AddressToEdit ? AddressToEdit.tipo : '',
-					logradouro:
-						isEditMode && AddressToEdit ? AddressToEdit.logradouro : '',
-					numero: isEditMode && AddressToEdit ? AddressToEdit.numero : '',
-					complemento:
-						isEditMode && AddressToEdit ? AddressToEdit.complemento : '',
-					cep: isEditMode && AddressToEdit ? AddressToEdit.cep : '',
-					cidade: isEditMode && AddressToEdit ? AddressToEdit.cidade : '',
-					estado: isEditMode && AddressToEdit ? AddressToEdit.estado : '',
-					pais: isEditMode && AddressToEdit ? AddressToEdit.pais : '',
-				}}
+				initialValues={isEditMode ? { initialValues } : { initialValues }}
 				validationSchema={SignupSchema}
-				onSubmit={(values) => {
-					handleAddress(values);
+				onSubmit={(values, { resetForm }) => {
+					handleSubmit(values);
+					resetForm();
 				}}
 			>
 				{({ errors, touched }) => (
@@ -138,7 +172,11 @@ const Address = ({ idPessoa, AddressToEdit }) => {
 						<Field name='pais' />
 						{errors.pais && touched.pais ? <div>{errors.pais}</div> : null}
 
-						<button type='submit'>Cadastrar Endereço</button>
+						{isEditMode ? (
+							<button type='submit'>Editar</button>
+						) : (
+							<button type='submit'>Cadastrar</button>
+						)}
 					</Form>
 				)}
 			</Formik>

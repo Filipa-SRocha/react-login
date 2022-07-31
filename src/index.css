@@ -10,6 +10,11 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+	display: grid;
+	grid-template-columns: 220px 1fr;
+}
+
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 		monospace;
