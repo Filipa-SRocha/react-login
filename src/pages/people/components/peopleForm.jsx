@@ -26,6 +26,7 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 			if (personDetails && personDetails.dataNascimento) {
 				novaData = personDetails.dataNascimento.split('-').reverse().join('-');
 			}
+
 			setInitialValues({
 				nome: personDetails.nome,
 				dataNascimento: personDetails.dataNascimento && novaData,

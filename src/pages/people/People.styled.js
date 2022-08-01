@@ -27,7 +27,7 @@ export const PageContainer = styled.section`
 export const Container = styled.section``;
 
 export const ListItemContainer = styled.li`
-width: 100%
+	width: 100%;
 	list-style: none;
 	display: flex;
 	flex-direction: column;
@@ -76,4 +76,14 @@ export const PersonInfoContainer = styled.div`
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	align-items: center;
+
+	& div {
+		display: flex;
+		flex-direction: column;
+		small {
+			color: #a5a5a5;
+			margin-top: -10px;
+			margin-bottom: 10px;
+		}
+	}
 `;

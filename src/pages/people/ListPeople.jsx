@@ -16,6 +16,7 @@ import {
 	ListItemContainer,
 	PersonContainer,
 	AddressesContainer,
+	Legenda,
 } from './People.styled';
 
 const ListPeople = ({ people }) => {
