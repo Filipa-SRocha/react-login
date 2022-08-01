@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { createContext } from 'react';
-import { Spinner } from '../components/Spinner';
 
 import { apiDBC } from '../api';
 import { ToastContainer, toast } from 'react-toastify';
@@ -53,7 +52,7 @@ function AuthContextProvider({ children }) {
 	};
 
 	if (isLoading) {
-		return <Spinner />;
+		return <h1>Loading</h1>;
 	}
 
 	return (
