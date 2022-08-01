@@ -94,10 +94,25 @@ const Address = ({ idPessoa, idEndereco }) => {
 	const SignupSchema = Yup.object().shape({
 		cep: Yup.string()
 			.min(8, 'Cep inválido!')
-			.max(14, 'cep inválido!')
+			.max(9, 'cep inválido!')
 			.required('Cep Obrigatório'),
-		logradouro: Yup.string().required('Campo obrigratório'),
-		estado: Yup.string().required('Campo obrigratório'),
+		logradouro: Yup.string()
+			.required('Campo obrigatório')
+			.min(3, 'Deve ter pelo menos 3 caracteres')
+			.max(250, 'Campo demasiado longo. (Máx: 250 caracteres)'),
+		numero: Yup.number().required('Campo obrigatório'),
+		cidade: Yup.string()
+			.required('Campo obrigatório')
+			.min(2, 'Deve ter pelo menos 2 caracteres')
+			.max(250, 'Campo demasiado longo. (Máx: 250 caracteres)'),
+		estado: Yup.string()
+			.required('Campo obrigatório')
+			.min(2, 'Deve ter pelo menos 2 caracteres')
+			.max(250, 'Campo demasiado longo. (Máx: 250 caracteres)'),
+		pais: Yup.string()
+			.required('Campo obrigatório')
+			.min(2, 'Deve ter pelo menos 2 caracteres')
+			.max(250, 'Campo demasiado longo. (Máx: 250 caracteres)'),
 	});
 
 	return (

@@ -17,8 +17,8 @@ import { PrimaryButton } from '../../components/button/Buttons';
 
 const NewAccount = () => {
 	YupPassword(Yup);
+	const [strongPassword, setStrongPassword] = useState([]);
 	const { handleSignUp } = useContext(AuthContext);
-	const [isStrongPassword, setIsStrongPassword] = useState(false);
 
 	const SignupSchema = Yup.object().shape({
 		login: Yup.string()
@@ -26,6 +26,7 @@ const NewAccount = () => {
 			.max(50, 'Login demasiado longo!!')
 			.required('Login obrigatório'),
 		senha: Yup.string()
+			.required('Por favor digite uma senha forte')
 			.password()
 			.min(8, 'Senha precisa conter pelo menos oito letra caracteres')
 			.minLowercase(1, 'Senha precisa conter pelo menos uma letra minuscula')
@@ -64,6 +65,18 @@ const NewAccount = () => {
 							<label htmlFor='senha'>SENHA: </label>
 
 							<div>
+								{touched.senha && errors.senha ? (
+									setStrongPassword(errors.senha)
+								) : (
+									<></>
+								)}
+								{strongPassword.length > 0 ? (
+									<AiOutlineUnlock />
+								) : touched.senha ? (
+									<AiOutlineLock />
+								) : (
+									<></>
+								)}
 								<Field name='senha' type='password' placeholder='Senha' />
 							</div>
 							{errors.senha && touched.senha ? <div>{errors.senha}</div> : null}

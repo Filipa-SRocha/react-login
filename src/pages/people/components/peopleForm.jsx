@@ -63,12 +63,25 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 
 	const RegisterSchema = Yup.object().shape({
 		nome: Yup.string()
-			.min(2, 'Nome precisa de, no mínimo, 2 caracteres')
-			.max(100, 'Nome demasiado grande!')
+			.min(2, 'Deve ter pelo menos 2 caracteres')
+			.max(255, 'Campo demasiado comprido. (Max: 250 caracteres)')
 			.required('Nome obrigatório'),
-		dataNascimento: Yup.string().required('Campo obrigatório'),
+		dataNascimento: Yup.string()
+			.required('Campo obrigatório')
+			.test('dataNascimento', 'Data inválida', (value) => {
+				const year = value.slice(-4);
+				const month = value.slice(3, 5) - 1;
+				const day = value.slice(0, 2);
+				const data = new Date(year, month, day);
+				const hoje = new Date();
+				return (
+					data <= hoje && month <= 12 && month >= 1 && day <= 31 && day > 0
+				);
+			}),
 		cpf: Yup.string().required('Campo obrigratório').max(20, 'Cpf inválido'),
-		email: Yup.string().email().required('Campo obrigratório'),
+		email: Yup.string()
+			.email()
+			.max(255, 'Campo demasiado comprido. (Max: 250 caracteres)'),
 	});
 
 	return (
