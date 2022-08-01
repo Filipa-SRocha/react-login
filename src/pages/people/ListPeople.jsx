@@ -1,20 +1,22 @@
 import {
-	Container,
-	ButtonContainer,
-	ListItemContainer,
-	PersonContainer,
-	AddressesContainer,
-} from './People.styled';
-
-import { CrudActionButton } from '../../components/button/Buttons';
+	CrudActionButton,
+	SecondaryButton,
+} from '../../components/button/Buttons';
 import Person from './Person';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useContext } from 'react';
 import { PeopleContext } from '../../Context/PeopleContext';
 import { useNavigate } from 'react-router-dom';
-
 import AddressContainer from './components/addressAccordeon/AddressContainer';
+
+import {
+	Container,
+	ButtonContainer,
+	ListItemContainer,
+	PersonContainer,
+	AddressesContainer,
+} from './People.styled';
 
 const ListPeople = ({ people }) => {
 	const { handleDelete, handleEdit } = useContext(PeopleContext);
@@ -32,13 +34,17 @@ const ListPeople = ({ people }) => {
 								<ButtonContainer>
 									<CrudActionButton
 										text='Editar'
+										icon='edit'
+										borderColor='grey'
 										onClick={() => {
 											handleEdit(person.idPessoa);
 										}}
 									></CrudActionButton>
 									<CrudActionButton
 										text='Excluir'
-										borderColor='red'
+										icon='delete'
+										backgroundColor='#BD322B'
+										color='white'
 										id={person.idPessoa}
 										onClick={() => {
 											confirmAlert({
@@ -63,8 +69,9 @@ const ListPeople = ({ people }) => {
 							</PersonContainer>
 							<AddressesContainer>
 								<AddressContainer idPessoa={person.idPessoa} />
-								<CrudActionButton
+								<SecondaryButton
 									text='Novo Endereço'
+									width='160px'
 									onClick={() => {
 										navigate(`/new-address/${person.idPessoa}`);
 									}}

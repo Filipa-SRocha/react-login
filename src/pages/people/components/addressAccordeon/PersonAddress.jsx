@@ -2,13 +2,19 @@ import { useContext } from 'react';
 import { AddressContext } from '../../../../Context/AddressContext';
 
 import { useNavigate } from 'react-router-dom';
-
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { MdHomeRepairService } from 'react-icons/md';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiEditAlt } from 'react-icons/bi';
 import { AiOutlineClose } from 'react-icons/ai';
+import { CrudSmallActionButton } from '../../../../components/button/Buttons';
 
-import { PersonAddressContainer } from './AddressContainer.styled';
+import {
+	PersonAddressContainer,
+	AddressItemContainer,
+	AddressButtonsContainer,
+} from './AddressContainer.styled';
 
 const PersonAddress = ({ address, setup, idPessoa }) => {
 	const navigate = useNavigate();
@@ -27,31 +33,56 @@ const PersonAddress = ({ address, setup, idPessoa }) => {
 	};
 
 	return (
-		<li>
+		<AddressItemContainer>
 			<PersonAddressContainer>
-				{address.tipo === 'COMERCIAL' ? (
-					<MdHomeRepairService />
-				) : (
-					<AiOutlineHome />
-				)}
-				<p>
-					{address.logradouro}, {address.numero}, {address.complemento}
-				</p>
+				<div>
+					{address.tipo === 'COMERCIAL' ? (
+						<MdHomeRepairService />
+					) : (
+						<AiOutlineHome />
+					)}
+					<p>
+						{address.logradouro}, {address.numero}, {address.complemento}
+					</p>
+				</div>
 				<small>
 					{address.cep} {address.cidade}, {address.estado}, {address.pais}
 				</small>
 			</PersonAddressContainer>
 
-			<div>
-				<button onClick={handleDelete}>
-					<AiOutlineClose />
-					Apagar
-				</button>
-				<button onClick={handleEdit}>
-					<BiEditAlt /> Editar
-				</button>
-			</div>
-		</li>
+			<AddressButtonsContainer>
+				<CrudSmallActionButton
+					text='Editar'
+					icon='edit'
+					borderColor='grey'
+					onClick={handleEdit}
+				></CrudSmallActionButton>
+				<CrudSmallActionButton
+					text='Excluir'
+					icon='delete'
+					backgroundColor='#BD322B'
+					color='white'
+					onClick={() => {
+						confirmAlert({
+							title: 'Eliminar',
+							message: `Quer mesmo eliminar este endereço?`,
+							buttons: [
+								{
+									label: 'Sim',
+									onClick: () => handleDelete(),
+								},
+								{
+									label: 'Não',
+									onClick: () => {
+										return;
+									},
+								},
+							],
+						});
+					}}
+				/>
+			</AddressButtonsContainer>
+		</AddressItemContainer>
 	);
 };
 export { PersonAddress };

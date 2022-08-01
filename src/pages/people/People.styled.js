@@ -5,20 +5,41 @@ export const PageContainer = styled.section`
 	max-width: 960px;
 	margin: 0 auto;
 	margin-left: 240px;
+
+	.peopleTitle {
+		padding: 40px 0 20px 0;
+		display: flex;
+		width: 100%;
+		justify-content: center;
+
+		button {
+			justify-self: flex-end;
+		}
+	}
+
+	.addButtonContainer {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 10px;
+	}
 `;
 
 export const Container = styled.section``;
 
 export const ListItemContainer = styled.li`
+width: 100%
 	list-style: none;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 8px;
-	min-height: 200px;
+	min-height: 160px;
 	max-height: 400px;
 	width: 100%;
 	border: 1px solid grey;
+	border-radius: 4px;
+	box-shadow: 0 2.5rem 2rem -2rem hsl(200 50% 20% / 40%);
+	margin-bottom: 28px;
 `;
 
 export const PersonContainer = styled.div`
@@ -32,21 +53,21 @@ export const PersonContainer = styled.div`
 
 export const ButtonContainer = styled.div`
 	display: flex;
-	flex-direction: column;
+	/* flex-direction: column; */
 	height: 100%;
-	align-items: center;
-	justify-content: space-around;
 
-	button {
-		height: 24px;
-		width: 80px;
+	align-items: center;
+	justify-content: flex-end;
+	margin-top: -10px;
+	& button {
+		margin-left: 10px;
 	}
 `;
 
 export const AddressesContainer = styled.div`
 	padding: 10px;
-
 	display: flex;
+	flex-direction: column;
 	width: 100%;
 `;
 

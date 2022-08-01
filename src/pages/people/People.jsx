@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ListPeople from './ListPeople';
 import { PeopleContext } from '../../Context/PeopleContext';
 import { PageContainer } from './People.styled';
-import { PrimaryButton } from '../../components/button/Buttons';
+import { AddButton } from '../../components/button/Buttons';
 
 const People = () => {
 	const { people, getPeople } = useContext(PeopleContext);
@@ -20,8 +20,12 @@ const People = () => {
 
 	return (
 		<PageContainer>
-			<button onClick={handleRegister}> Cadastrar </button>
-
+			<div className='peopleTitle'>
+				<h1>Pessoas</h1>
+			</div>
+			<div className='addButtonContainer'>
+				<AddButton text='+ Nova Pessoa' onClick={handleRegister} />
+			</div>
 			{/* Lista de Pessoas */}
 			<ListPeople people={people} />
 

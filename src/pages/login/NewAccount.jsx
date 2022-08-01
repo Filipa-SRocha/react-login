@@ -17,7 +17,7 @@ import { PrimaryButton } from '../../components/button/Buttons';
 
 const NewAccount = () => {
 	YupPassword(Yup);
-	const [strongPassword, setStrongPassword] = useState([]);
+	const [strongPassword, setStrongPassword] = useState();
 	const { handleSignUp } = useContext(AuthContext);
 
 	const SignupSchema = Yup.object().shape({
@@ -64,16 +64,11 @@ const NewAccount = () => {
 
 							<label htmlFor='senha'>SENHA: </label>
 
-							<div>
-								{touched.senha && errors.senha ? (
-									setStrongPassword(errors.senha)
-								) : (
-									<></>
-								)}
-								{strongPassword.length > 0 ? (
-									<AiOutlineUnlock />
+							<div style={{ display: 'flex' }}>
+								{errors.senha && touched.senha ? (
+									<AiOutlineUnlock style={{ color: 'red' }} />
 								) : touched.senha ? (
-									<AiOutlineLock />
+									<AiOutlineLock style={{ color: 'green' }} />
 								) : (
 									<></>
 								)}

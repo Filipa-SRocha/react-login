@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { primaryColor } from '../../../consts';
 
 export const FormWrapper = styled.div`
 	width: 100%;
@@ -17,14 +16,11 @@ export const FormWrapper = styled.div`
 		color: grey;
 	}
 
-	button {
-		background-color: ${primaryColor};
-		color: white;
-		width: 100%;
-		margin-top: 30px;
-		height: 40px;
-		box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
-		border-radius: 8px;
-		border: none;
+	& button {
+		margin-top: 20px;
+	}
+
+	& button:first-of-type {
+		margin-top: 60px;
 	}
 `;

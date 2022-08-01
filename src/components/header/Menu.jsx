@@ -30,7 +30,7 @@ const Menu = () => {
 					<Item name='Subscriptions' url='#' />
 				</div>
 
-				<SecondaryButton text='Logout' onClick={handleLogout} />
+				<SecondaryButton width='180px' text='Logout' onClick={handleLogout} />
 			</NavList>
 		);
 	};

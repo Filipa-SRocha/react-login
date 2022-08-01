@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { AiOutlineHome } from 'react-icons/ai';
 import { AiOutlineDown } from 'react-icons/ai';
-
+import { AiOutlineUp } from 'react-icons/ai';
 import { AddressContext } from '../../../../Context/AddressContext';
 import { AddressContent, AddressTitle } from './AddressContainer.styled';
 
@@ -28,7 +28,8 @@ const AddressContainer = ({ idPessoa }) => {
 	return (
 		<>
 			<AddressTitle onClick={toggleAccordeon}>
-				<AiOutlineHome /> <h3>Endereço</h3> <AiOutlineDown />
+				<AiOutlineHome /> <h3>Endereço</h3>{' '}
+				{isOpen ? <AiOutlineUp /> : <AiOutlineDown />}
 			</AddressTitle>
 
 			<AddressContent className={isOpen ? 'show' : ''}>
@@ -47,7 +48,9 @@ const AddressContainer = ({ idPessoa }) => {
 					</ul>
 				) : (
 					<>
-						<p>Não existe nenhuma morada cadastrada</p>
+						<p style={{ margin: '10px 0 20px 0' }}>
+							Não existe nenhuma morada cadastrada
+						</p>
 					</>
 				)}
 			</AddressContent>

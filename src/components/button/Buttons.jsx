@@ -1,36 +1,94 @@
-import { Button, SmallButton } from './Button.styled';
+import { BiEditAlt } from 'react-icons/bi';
+import { AiOutlineClose } from 'react-icons/ai';
+
+import {
+	ButtonPrimary,
+	ButtonSecondary,
+	SmallButton,
+	ButtonAdd,
+	SmallerButton,
+} from './Button.styled';
 
 const PrimaryButton = ({ text, ...params }) => {
-	return (
-		<Button secondary='false' {...params}>
-			{text}
-		</Button>
-	);
+	return <ButtonPrimary {...params}>{text}</ButtonPrimary>;
 };
 
-const SecondaryButton = ({ text, ...params }) => {
+const SecondaryButton = ({ text, width, ...params }) => {
 	return (
-		<Button secondary='true' {...params}>
+		<ButtonSecondary width={width} {...params}>
 			{text}
-		</Button>
+		</ButtonSecondary>
 	);
 };
 
 const CrudActionButton = ({
 	text,
+	icon,
 	borderColor,
 	backgroundColor,
+	color,
 	...params
 }) => {
+	const Icon =
+		icon === 'edit' ? (
+			<BiEditAlt />
+		) : icon === 'delete' ? (
+			<AiOutlineClose />
+		) : (
+			''
+		);
+
 	return (
 		<SmallButton
 			borderColor={borderColor}
 			backgroundColor={backgroundColor}
+			color={color}
 			{...params}
 		>
+			{Icon}
 			{text}
 		</SmallButton>
 	);
 };
 
-export { PrimaryButton, SecondaryButton, CrudActionButton };
+const CrudSmallActionButton = ({
+	text,
+	icon,
+	borderColor,
+	backgroundColor,
+	color,
+	...params
+}) => {
+	const Icon =
+		icon === 'edit' ? (
+			<BiEditAlt />
+		) : icon === 'delete' ? (
+			<AiOutlineClose />
+		) : (
+			''
+		);
+
+	return (
+		<SmallerButton
+			borderColor={borderColor}
+			backgroundColor={backgroundColor}
+			color={color}
+			{...params}
+		>
+			{Icon}
+			{text}
+		</SmallerButton>
+	);
+};
+
+const AddButton = ({ text, ...params }) => {
+	return <ButtonAdd {...params}>{text}</ButtonAdd>;
+};
+
+export {
+	PrimaryButton,
+	SecondaryButton,
+	CrudActionButton,
+	CrudSmallActionButton,
+	AddButton,
+};

@@ -5,6 +5,10 @@ import { useContext, useEffect, useState } from 'react';
 import { PeopleContext } from '../../../Context/PeopleContext';
 import { FormWrapper } from './peopleForm.styled';
 import { useNavigate } from 'react-router-dom';
+import {
+	PrimaryButton,
+	SecondaryButton,
+} from '../../../components/button/Buttons';
 
 const PeopleForm = ({ isEditMode, id, personDetails }) => {
 	const navigate = useNavigate();
@@ -144,13 +148,15 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 						<Field name='email' />
 						{errors.email && touched.email ? <div>{errors.email}</div> : null}
 						{isEditMode ? (
-							<button type='submit'>Editar</button>
+							<PrimaryButton text='Editar' type='submit' />
 						) : (
-							<button type='submit'>Cadastrar</button>
+							<PrimaryButton text='Cadastrar' type='submit' />
 						)}
-						<button type='button' onClick={handleCancel}>
-							Cancelar
-						</button>
+						<SecondaryButton
+							text='Cancelar'
+							type='button'
+							onClick={handleCancel}
+						/>
 					</Form>
 				)}
 			</Formik>
