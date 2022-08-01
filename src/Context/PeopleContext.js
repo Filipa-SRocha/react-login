@@ -14,7 +14,6 @@ const PeopleContextProvider = ({ children }) => {
 		try {
 			const { data } = await apiDBC.get('/pessoa');
 			setPeople(data.content);
-			console.log(data.content);
 			return;
 		} catch (error) {
 			console.log(error);
@@ -24,11 +23,9 @@ const PeopleContextProvider = ({ children }) => {
 	const handleDelete = async (id) => {
 		try {
 			await apiDBC.delete(`/pessoa/${id}`);
-			// window.location.reload(false);
 			toast.success('Pessoa removida com sucesso!');
 			navigate('/people');
 			getPeople();
-
 			return;
 		} catch (error) {
 			console.log('Erro =>', error);
@@ -47,14 +44,15 @@ const PeopleContextProvider = ({ children }) => {
 		}
 	};
 
-	const handleRegister = async (values) => {
+	const handleRegister = async (values, formReset) => {
 		try {
+			console.log('PeoplContext -> handleRegister', values);
 			await apiDBC.post('/pessoa', values);
-
 			navigate('/people');
+			formReset();
 			toast.success('Pessoa cadastrada com sucesso!');
 		} catch (error) {
-			console.log('erro => ', error.response);
+			console.log('erro => ', error);
 			toast.error('Erro no cadastro!');
 		}
 	};
@@ -63,11 +61,12 @@ const PeopleContextProvider = ({ children }) => {
 		navigate(`/people/update-person/${id}`);
 	};
 
-	const applyChanges = async (id, updatedPerson) => {
+	const applyChanges = async (id, updatedPerson, formReset) => {
 		try {
 			await apiDBC.put(`/pessoa/${id}`, updatedPerson);
 			toast.success('Cadastro atualizado com sucesso!');
 			navigate('/people');
+			formReset();
 		} catch (error) {
 			console.log('Erro => ', error);
 			toast.error('Erro! Não foi possivel atualizar os dados!');

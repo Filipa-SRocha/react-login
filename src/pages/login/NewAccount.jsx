@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import YupPassword from 'yup-password';
 import { AiOutlineLock } from 'react-icons/ai';
 import { AiOutlineUnlock } from 'react-icons/ai';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
 import {
@@ -18,7 +18,7 @@ import { PrimaryButton } from '../../components/button/Buttons';
 
 const NewAccount = () => {
 	YupPassword(Yup);
-	const [strongPassword, setStrongPassword] = useState();
+
 	const { handleSignUp } = useContext(AuthContext);
 
 	const SignupSchema = Yup.object().shape({
@@ -43,7 +43,7 @@ const NewAccount = () => {
 					<img src={Logo} alt='Logo' />
 
 					<h1>Dashboard Kit</h1>
-					<p>Create New Account</p>
+					<p>Criar Nova Conta</p>
 					<p>Escolha um nome de usuário e uma senha</p>
 				</LogoContainer>
 

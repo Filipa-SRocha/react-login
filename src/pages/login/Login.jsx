@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import { useContext, useState } from 'react';
+import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
 import {
@@ -18,14 +19,19 @@ const Login = () => {
 	const { handleLogin } = useContext(AuthContext);
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+	const SignInSchema = Yup.object().shape({
+		login: Yup.string().required('Login obrigatório'),
+		senha: Yup.string().required('Por favor digite a sua senha!'),
+	});
+
 	const formik = useFormik({
 		initialValues: {
 			login: '',
 			senha: '',
 		},
+		validationSchema: SignInSchema,
 
 		onSubmit: (values) => {
-			console.log('aqui');
 			handleLogin(values);
 		},
 	});
@@ -42,8 +48,8 @@ const Login = () => {
 				<LogoContainer>
 					<img src={Logo} alt='Logo' />
 					<h1>Dashboard Kit</h1>
-					<p>Log In to Dashboard Kit</p>
-					<p>Enter your username and password below</p>
+					<p>Log In Dashboard Kit</p>
+					<p>Introduza o seu nome de usuário e senha</p>
 				</LogoContainer>
 
 				<FormLogin onSubmit={formik.handleSubmit}>
@@ -72,7 +78,7 @@ const Login = () => {
 						</button>
 					</div>
 
-					<PrimaryButton text='Login' />
+					<PrimaryButton type='submit' text='Login' />
 				</FormLogin>
 				<div>
 					<Link to='/new-account'>

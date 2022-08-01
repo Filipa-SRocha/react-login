@@ -9,6 +9,11 @@ import {
 	PrimaryButton,
 	SecondaryButton,
 } from '../../../components/button/Buttons';
+import {
+	convertDateUsaToBr,
+	removeCpfMask,
+	removePeopleInputMasks,
+} from '../../../utils/mascaras';
 
 const PeopleForm = ({ isEditMode, id, personDetails }) => {
 	const navigate = useNavigate();
@@ -24,7 +29,7 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 		if (isEditMode) {
 			let novaData;
 			if (personDetails && personDetails.dataNascimento) {
-				novaData = personDetails.dataNascimento.split('-').reverse().join('-');
+				novaData = convertDateUsaToBr(personDetails.dataNascimento);
 			}
 
 			setInitialValues({
@@ -40,26 +45,11 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 		setup();
 	}, [personDetails]);
 
-	const removeInputMasks = (person) => {
-		person.cpf =
-			person.cpf.slice(0, 3) +
-			person.cpf.slice(4, 7) +
-			person.cpf.slice(8, 11) +
-			person.cpf.slice(12, 14);
-
-		person.dataNascimento =
-			person.dataNascimento.slice(-4) +
-			'-' +
-			person.dataNascimento.slice(3, 5) +
-			'-' +
-			person.dataNascimento.slice(0, 2);
-
-		return person;
-	};
-
-	const handleSubmit = (values) => {
-		const newPerson = removeInputMasks(values);
-		isEditMode ? applyChanges(id, newPerson) : handleRegister(newPerson);
+	const handleSubmit = (values, resetForm) => {
+		const newPerson = removePeopleInputMasks(values);
+		isEditMode
+			? applyChanges(id, newPerson, resetForm)
+			: handleRegister(newPerson, resetForm);
 	};
 
 	const handleCancel = () => {
@@ -79,11 +69,17 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 				const day = value.slice(0, 2);
 				const data = new Date(year, month, day);
 				const hoje = new Date();
-				return (
-					data <= hoje && month <= 12 && month >= 1 && day <= 31 && day > 0
-				);
+
+				return data <= hoje && day == data.getDate();
 			}),
-		cpf: Yup.string().required('Campo obrigratório').max(20, 'Cpf inválido'),
+		cpf: Yup.string()
+			.required('Campo obrigratório')
+			.max(20, 'Cpf inválido')
+			.test('cpf', 'CPF inválido', function (value) {
+				let newCpf = removeCpfMask(value);
+
+				return newCpf.length === 11;
+			}),
 		email: Yup.string()
 			.email()
 			.max(255, 'Campo demasiado comprido. (Max: 250 caracteres)'),
@@ -97,8 +93,7 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 				initialValues={initialValues}
 				validationSchema={RegisterSchema}
 				onSubmit={(values, { resetForm }) => {
-					handleSubmit(values);
-					resetForm();
+					handleSubmit(values, resetForm);
 					return;
 				}}
 			>

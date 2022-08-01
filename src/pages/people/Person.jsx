@@ -1,17 +1,9 @@
-import { PersonInfoContainer, Legenda } from './People.styled';
-import moment from 'moment';
-import NumberFormat from 'react-number-format';
+import { PersonInfoContainer } from './People.styled';
+import { addCpfMask, displayDatePortuguese } from '../../utils/mascaras';
 
 const Person = ({ person }) => {
-	const data = new Date(person.dataNascimento);
-	const cpf =
-		person.cpf.slice(0, 3) +
-		'.' +
-		person.cpf.slice(4, 7) +
-		'.' +
-		person.cpf.slice(8, 11) +
-		'-' +
-		person.cpf.slice(-2);
+	const ptDate = displayDatePortuguese(person.dataNascimento);
+	const cpf = addCpfMask(person.cpf);
 
 	return (
 		<>
@@ -22,7 +14,7 @@ const Person = ({ person }) => {
 				</div>
 				<div>
 					<small>Aniversário</small>
-					<p>{moment(data).locale('pt').format('LL')}</p>
+					<p>{ptDate}</p>
 				</div>
 				<div>
 					<small>CPF</small>

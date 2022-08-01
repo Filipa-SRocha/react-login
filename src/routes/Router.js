@@ -17,7 +17,6 @@ import { UpdateAddressPage } from '../pages/address/UpdateAddressPage';
 
 const Router = () => {
 	const { isLogged } = useContext(AuthContext);
-
 	return (
 		<BrowserRouter>
 			<GlobalStyle />

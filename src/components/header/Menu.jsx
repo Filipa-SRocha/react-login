@@ -21,7 +21,7 @@ const Menu = () => {
 				<div>
 					<Item name='Overview' url='#' />
 					<Item name='Pessoas' url='/people' />
-					<Item name='Endereços' url='/address' />
+					<Item name='Endereços' url='#' />
 					<Item name='Contatos' url='#' />
 				</div>
 

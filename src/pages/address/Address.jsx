@@ -82,7 +82,7 @@ const Address = ({ idPessoa, idEndereco }) => {
 		const newCep = values.cep.replaceAll('-', '');
 		const newAddress = {
 			idPessoa: idPessoa,
-			tipo: 'COMERCIAL',
+			tipo: values.tipo,
 			logradouro: values.logradouro,
 			numero: parseInt(values.numero),
 			complemento: values.complemento,
@@ -98,7 +98,12 @@ const Address = ({ idPessoa, idEndereco }) => {
 		cep: Yup.string()
 			.min(8, 'Cep inválido!')
 			.max(9, 'cep inválido!')
-			.required('Cep Obrigatório'),
+			.required('Cep Obrigatório')
+			.test('cep', 'Cep Inválido', (value) => {
+				let newCep = value.replaceAll('_', '');
+				newCep = newCep.replace('-', '');
+				return newCep.length === 8;
+			}),
 		logradouro: Yup.string()
 			.required('Campo obrigatório')
 			.min(3, 'Deve ter pelo menos 3 caracteres')
