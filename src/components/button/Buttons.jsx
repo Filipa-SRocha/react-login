@@ -1,12 +1,16 @@
 import { Button, SmallButton } from './Button.styled';
 
-const PrimaryButton = ({ text }) => {
-	return <Button>{text}</Button>;
+const PrimaryButton = ({ text, ...params }) => {
+	return (
+		<Button secondary='false' {...params}>
+			{text}
+		</Button>
+	);
 };
 
 const SecondaryButton = ({ text, ...params }) => {
 	return (
-		<Button secondary padded {...params}>
+		<Button secondary='true' {...params}>
 			{text}
 		</Button>
 	);

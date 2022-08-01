@@ -20,7 +20,7 @@ const People = () => {
 
 	return (
 		<PageContainer>
-			<PrimaryButton text='Cadastrar' onClick={handleRegister} />
+			<button onClick={handleRegister}> Cadastrar </button>
 
 			{/* Lista de Pessoas */}
 			<ListPeople people={people} />

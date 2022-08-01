@@ -23,7 +23,7 @@ export const Button = styled.button`
 	}
 `;
 
-export const SmallButton = styled.div`
+export const SmallButton = styled.button`
 	min-width: 50px;
 	min-width: fit-content;
 	max-width: 200px;

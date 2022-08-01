@@ -5,19 +5,8 @@ import { useNavigate } from 'react-router-dom';
 const AddressContext = createContext();
 
 function AddressContextProvider({ children }) {
+	const navigate = useNavigate();
 	const [isEditMode, setIsEditMode] = useState(false);
-
-	// const moradaTeste = {
-	// 	idPessoa: 440,
-	// 	tipo: 'COMERCIAL',
-	// 	logradouro: 'Rua da picaria',
-	// 	numero: 1302,
-	// 	complemento: 'ap 504',
-	// 	cep: '09890530',
-	// 	cidade: 'Porto',
-	// 	estado: 'OP',
-	// 	pais: 'string',
-	// };
 
 	async function createAddress(address) {
 		console.log('inside create');
@@ -57,8 +46,15 @@ function AddressContextProvider({ children }) {
 		}
 	};
 
-	const updateAddress = (idEndereco, newAddress) => {
-		//faz o update com o id e os valores ja existentes
+	const updateAddress = async (idEndereco, newAddress) => {
+		console.log('dentro do update', newAddress, idEndereco);
+		try {
+			const endereco = await apiDBC.put(`/endereco/${idEndereco}`, newAddress);
+			console.log('update comm sucesso');
+			navigate('/people');
+		} catch (error) {
+			console.log('Erro =>', error);
+		}
 	};
 
 	const deleteAddress = async (id) => {

@@ -22,7 +22,11 @@ const UpdateAddressPage = () => {
 
 	return (
 		<div>
-			<Address addressToEdit={addressToEdit} idEndereco={idEndereco} />
+			<Address
+				idPessoa={addressToEdit.idPessoa}
+				addressToEdit={addressToEdit}
+				idEndereco={idEndereco}
+			/>
 		</div>
 	);
 };

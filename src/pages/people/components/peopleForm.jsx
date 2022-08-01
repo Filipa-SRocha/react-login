@@ -4,8 +4,10 @@ import NumberFormat from 'react-number-format';
 import { useContext, useEffect, useState } from 'react';
 import { PeopleContext } from '../../../Context/PeopleContext';
 import { FormWrapper } from './peopleForm.styled';
+import { useNavigate } from 'react-router-dom';
 
 const PeopleForm = ({ isEditMode, id, personDetails }) => {
+	const navigate = useNavigate();
 	const { applyChanges, handleRegister } = useContext(PeopleContext);
 	const [initialValues, setInitialValues] = useState({
 		nome: '',
@@ -53,6 +55,10 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 	const handleSubmit = (values) => {
 		const newPerson = removeInputMasks(values);
 		isEditMode ? applyChanges(id, newPerson) : handleRegister(newPerson);
+	};
+
+	const handleCancel = () => {
+		navigate('/people');
 	};
 
 	const RegisterSchema = Yup.object().shape({
@@ -129,6 +135,9 @@ const PeopleForm = ({ isEditMode, id, personDetails }) => {
 						) : (
 							<button type='submit'>Cadastrar</button>
 						)}
+						<button type='button' onClick={handleCancel}>
+							Cancelar
+						</button>
 					</Form>
 				)}
 			</Formik>
