@@ -6,7 +6,10 @@ import NumberFormat from 'react-number-format';
 import { AddressContext } from '../../Context/AddressContext';
 import { FormBackground } from '../people/registerPerson/RegisterPerson.styled';
 import { FormWrapper, FormContainer } from './Address.style';
-import { SecondaryButton } from '../../components/button/Buttons';
+import {
+	PrimaryButton,
+	SecondaryButton,
+} from '../../components/button/Buttons';
 import { useNavigate } from 'react-router-dom';
 
 const Address = ({ idPessoa, idEndereco }) => {
@@ -208,9 +211,11 @@ const Address = ({ idPessoa, idEndereco }) => {
 								{errors.pais && touched.pais ? <div>{errors.pais}</div> : null}
 
 								{isEditMode ? (
-									<button type='submit'>Editar</button>
+									<PrimaryButton text='Editar' type='submit' />
 								) : (
-									<button type='submit'>Cadastrar</button>
+									// <button type='submit'>Editar</button>
+									<PrimaryButton text='Cadastrar' type='submit' />
+									// <button type='submit'>Cadastrar</button>
 								)}
 								<SecondaryButton text='Cancelar' onClick={handleCancel} />
 							</Form>

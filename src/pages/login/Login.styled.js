@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Formik } from 'formik';
-import { secondaryColor, primaryColor, primaryColorHover } from '../../consts';
+import { secondaryColor, primaryColor } from '../../consts';
 
 export const PageContainer = styled.div`
 	width: 100vw;
@@ -47,12 +46,19 @@ export const FormLogin = styled.form`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	margin-top: 38px;
-	color: ${secondaryColor};
+	margin-top: 30px;
+	color: #363740;
+
+	.StrongPassword {
+		display: flex;
+		align-items: center;
+	}
 
 	label,
 	& label {
 		margin-bottom: 6px;
+		margin-top: 12px;
+		margin-right: 6px;
 		font-size: 12px;
 	}
 
@@ -80,6 +86,12 @@ export const FormLogin = styled.form`
 			cursor: pointer;
 		}
 	}
+`;
+
+export const Errors = styled.div`
+	color: red;
+	font-size: 12px;
+	margin-top: -12px;
 `;
 
 export const LogoContainer = styled.div`

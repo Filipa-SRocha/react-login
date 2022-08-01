@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react';
 import { apiDBC } from '../api';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const AddressContext = createContext();
 
@@ -9,19 +10,17 @@ function AddressContextProvider({ children }) {
 	const [isEditMode, setIsEditMode] = useState(false);
 
 	async function createAddress(address) {
-		console.log('inside create');
-		console.log(address);
 		try {
-			console.log(address);
 			const { data } = await apiDBC.post(
 				`/endereco/${address.idPessoa}?idPessoa=${address.idPessoa}`,
 				address
 			);
-			console.log('Cadastrado!!', data);
+			toast.success('Novo endereço cadastrado!');
+			navigate('/people');
 		} catch (error) {
+			toast.error('Erro no cadastro de endereço.');
 			console.log(error);
 		}
-		//registrar o endereço no id da pessoa
 	}
 
 	const getAddress = async (idPessoa) => {
@@ -39,7 +38,6 @@ function AddressContextProvider({ children }) {
 	const getAddressByAddressId = async (idEndereco) => {
 		try {
 			const endereco = apiDBC.get(`/endereco/${idEndereco}`);
-			console.log('sucesso');
 			return endereco;
 		} catch (error) {
 			console.log('Erro =>', error);
@@ -47,13 +45,13 @@ function AddressContextProvider({ children }) {
 	};
 
 	const updateAddress = async (idEndereco, newAddress) => {
-		console.log('dentro do update', newAddress, idEndereco);
 		try {
 			const endereco = await apiDBC.put(`/endereco/${idEndereco}`, newAddress);
-			console.log('update comm sucesso');
+			toast.success('Endereço atualizado com sucesso!');
 			navigate('/people');
 		} catch (error) {
 			console.log('Erro =>', error);
+			toast.error('Erro na atualização do endereço');
 		}
 	};
 

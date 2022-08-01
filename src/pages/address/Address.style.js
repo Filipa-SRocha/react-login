@@ -17,14 +17,14 @@ export const FormWrapper = styled.div`
 	}
 
 	button {
-		background-color: ${primaryColor};
-		color: white;
-		width: 100%;
-		margin: 30px 0;
-		height: 40px;
-		box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
-		border-radius: 8px;
-		border: none;
+		margin: 6px 0;
+	}
+	button:first-of-type {
+		margin-top: 30px;
+	}
+
+	button:last-of-type {
+		margin-bottom: 20px;
 	}
 `;
 

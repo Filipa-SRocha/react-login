@@ -11,6 +11,7 @@ import {
 	FormLogin,
 	LogoContainer,
 	FormContainer,
+	Errors,
 } from './Login.styled';
 import Logo from '../../images/logoImg.png';
 import { PrimaryButton } from '../../components/button/Buttons';
@@ -60,11 +61,13 @@ const NewAccount = () => {
 						<FormLogin>
 							<label htmlFor='login'>LOGIN: </label>
 							<Field name='login' placeholder='Nome de usuário' />
-							{errors.login && touched.login ? <div>{errors.login}</div> : null}
+							{errors.login && touched.login ? (
+								<Errors>{errors.login}</Errors>
+							) : null}
 
-							<label htmlFor='senha'>SENHA: </label>
+							<div className='StrongPassword'>
+								<label htmlFor='senha'>SENHA </label>
 
-							<div style={{ display: 'flex' }}>
 								{errors.senha && touched.senha ? (
 									<AiOutlineUnlock style={{ color: 'red' }} />
 								) : touched.senha ? (
@@ -72,9 +75,11 @@ const NewAccount = () => {
 								) : (
 									<></>
 								)}
-								<Field name='senha' type='password' placeholder='Senha' />
 							</div>
-							{errors.senha && touched.senha ? <div>{errors.senha}</div> : null}
+							<Field name='senha' type='password' placeholder='Senha' />
+							{errors.senha && touched.senha ? (
+								<Errors>{errors.senha}</Errors>
+							) : null}
 
 							<PrimaryButton type='submit' text='Cadastrar' />
 						</FormLogin>

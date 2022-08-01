@@ -5,7 +5,7 @@ export const ButtonPrimary = styled.button`
 	background-color: ${primaryColor};
 	color: white;
 	width: 100%;
-	max-width: 300px;
+
 	height: 40px;
 	font-weight: 700;
 	box-shadow: '0px 4px 12px rgba(55, 81, 255, 0.24)';
