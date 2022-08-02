@@ -56,7 +56,6 @@ function AddressContextProvider({ children }) {
 	};
 
 	const deleteAddress = async (id) => {
-		//apaga endereço a partir do id da pessoa
 		try {
 			await apiDBC.delete(`/endereco/${id}`);
 		} catch (error) {

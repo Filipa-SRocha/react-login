@@ -4,13 +4,19 @@ import { useEffect, useContext } from 'react';
 import { apiCep } from '../../api';
 import NumberFormat from 'react-number-format';
 import { AddressContext } from '../../Context/AddressContext';
-import { FormBackground } from '../people/registerPerson/RegisterPerson.styled';
-import { FormWrapper, FormContainer } from './Address.style';
+import {
+	PageContainer,
+	FormContainerWider,
+	StyledForm,
+} from '../../components/Forms.styled';
+
 import {
 	PrimaryButton,
 	SecondaryButton,
 } from '../../components/button/Buttons';
 import { useNavigate } from 'react-router-dom';
+import { removeCepInputFormat, removeCepMask } from '../../utils/mascaras';
+import { Errors } from '../../components/Forms.styled';
 
 const Address = ({ idPessoa, idEndereco }) => {
 	const navigate = useNavigate();
@@ -24,12 +30,13 @@ const Address = ({ idPessoa, idEndereco }) => {
 	} = useContext(AddressContext);
 
 	const handleCep = async (values) => {
-		const cep = values.cep.slice(0, 5) + values.cep.slice(6);
+		const cep = removeCepMask(values.cep);
 		try {
 			const { data } = await apiCep.get(`/${cep}/json/`);
 			values.logradouro = data.logradouro;
 			values.estado = data.uf;
 			values.complemento = data.complemento;
+			values.cidade = data.localidade;
 		} catch (error) {
 			console.log(error);
 		}
@@ -37,6 +44,7 @@ const Address = ({ idPessoa, idEndereco }) => {
 
 	const GetCep = () => {
 		const { values } = useFormikContext();
+		console.log('Action');
 		useEffect(() => {
 			if (!values.cep.includes('_')) {
 				handleCep(values);
@@ -98,17 +106,14 @@ const Address = ({ idPessoa, idEndereco }) => {
 		cep: Yup.string()
 			.min(8, 'Cep inválido!')
 			.max(9, 'cep inválido!')
-			.required('Cep Obrigatório')
-			.test('cep', 'Cep Inválido', (value) => {
-				let newCep = value.replaceAll('_', '');
-				newCep = newCep.replace('-', '');
-				return newCep.length === 8;
-			}),
+			.required('Cep Obrigatório'),
+
+		tipo: Yup.string().required('Campo obrigatório'),
 		logradouro: Yup.string()
 			.required('Campo obrigatório')
 			.min(3, 'Deve ter pelo menos 3 caracteres')
 			.max(250, 'Campo demasiado longo. (Máx: 250 caracteres)'),
-		numero: Yup.number().required('Campo obrigatório'),
+		numero: Yup.number('Deve ser um número').required('Campo obrigatório'),
 		cidade: Yup.string()
 			.required('Campo obrigatório')
 			.min(2, 'Deve ter pelo menos 2 caracteres')
@@ -123,11 +128,22 @@ const Address = ({ idPessoa, idEndereco }) => {
 			.max(250, 'Campo demasiado longo. (Máx: 250 caracteres)'),
 	});
 
+	function validateCep(value) {
+		let error;
+
+		const newCep = removeCepInputFormat(value);
+
+		if (newCep.length !== 8) {
+			error = 'CEP Inválido';
+		}
+		return error;
+	}
+
 	return (
-		<FormBackground>
-			<FormContainer>
-				<FormWrapper>
-					<h1>Cadastro de Endereço</h1>
+		<PageContainer>
+			<FormContainerWider>
+				<h2>Cadastro de Endereço</h2>
+				<StyledForm>
 					<Formik
 						initialValues={{
 							tipo: '',
@@ -148,87 +164,103 @@ const Address = ({ idPessoa, idEndereco }) => {
 						{({ errors, touched }) => (
 							<Form>
 								{isEditMode ? <GetPreviusData /> : ''}
-								<label htmlFor='cep'>CEP: </label>
-								<Field name='cep'>
-									{({ field, form, meta }) => (
-										<NumberFormat
-											{...field}
-											format='#####-###'
-											mask='_'
-											id='cep'
-											type='text'
-											className={
-												errors.phone && touched.phone
-													? 'text-input error'
-													: 'text-input'
-											}
-										/>
-									)}
-								</Field>
-								<GetCep />
+								<div>
+									<label htmlFor='cep'>CEP* </label>
+									<Field name='cep' validate={validateCep}>
+										{({ field, form, meta }) => (
+											<NumberFormat
+												{...field}
+												format='#####-###'
+												mask='_'
+												id='cep'
+												type='text'
+											/>
+										)}
+									</Field>
+									{touched.cep ? <GetCep /> : null}
 
-								{errors.cep && touched.cep ? <div>{errors.cep}</div> : null}
+									{errors.cep && touched.cep ? (
+										<Errors>{errors.cep}</Errors>
+									) : null}
+								</div>
+								<div>
+									<label htmlFor='tipo'>Tipo*: </label>
+									<Field
+										component='select'
+										id='tipo'
+										name='tipo'
+										multiple={false}
+									>
+										<option value='' hidden>
+											Escolha uma opção
+										</option>
+										<option value='COMERCIAL'>Comercial</option>
+										<option value='RESIDENCIAL'>Residencial</option>
+									</Field>
+									{errors.tipo && touched.tipo ? (
+										<Errors>{errors.tipo}</Errors>
+									) : null}
+								</div>
+								<div>
+									<label htmlFor='logradouro'>Logradouro*</label>
+									<Field name='logradouro' />
+									{touched.logradouro && errors.logradouro ? (
+										<Errors>{errors.logradouro}</Errors>
+									) : null}
+								</div>
+								<div className='flexContainer'>
+									<div>
+										<label htmlFor='numero'>Numero* </label>
+										<Field name='numero' />
+										{errors.numero && touched.numero ? (
+											<Errors>{errors.numero}</Errors>
+										) : null}
+									</div>
 
-								<label htmlFor='tipo'>Tipo: </label>
-								<Field
-									component='select'
-									id='tipo'
-									name='tipo'
-									multiple={false}
-								>
-									<option value='COMERCIAL'>Comercial</option>
-									<option value='RESIDENCIAL'>Residencial</option>
-								</Field>
-								{errors.tipo && touched.tipo ? <div>{errors.tipo}</div> : null}
-
-								<label htmlFor='logradouro'>Logradouro</label>
-								<Field name='logradouro' />
-								{errors.logradouro && touched.logradouro ? (
-									<div>{errors.logradouro}</div>
-								) : null}
-
-								<label htmlFor='numero'>Numero: </label>
-								<Field name='numero' />
-								{errors.numero && touched.numero ? (
-									<div>{errors.numero}</div>
-								) : null}
-
-								<label htmlFor='complemento'>Complemento: </label>
-								<Field name='complemento' />
-								{errors.complemento && touched.complemento ? (
-									<div>{errors.complemento}</div>
-								) : null}
-
-								<label htmlFor='cidade'>Cidade: </label>
-								<Field name='cidade' />
-								{errors.cidade && touched.cidade ? (
-									<div>{errors.cidade}</div>
-								) : null}
-
-								<label htmlFor='estado'>Estado: </label>
-								<Field name='estado' />
-								{errors.estado && touched.estado ? (
-									<div>{errors.estado}</div>
-								) : null}
-
-								<label htmlFor='pais'>País: </label>
-								<Field name='pais' />
-								{errors.pais && touched.pais ? <div>{errors.pais}</div> : null}
+									<div>
+										<label htmlFor='complemento'>Complemento </label>
+										<Field name='complemento' />
+										{errors.complemento && touched.complemento ? (
+											<Errors>{errors.complemento}</Errors>
+										) : null}
+									</div>
+								</div>
+								<div>
+									<label htmlFor='cidade'>Cidade* </label>
+									<Field name='cidade' />
+									{errors.cidade && touched.cidade ? (
+										<Errors>{errors.cidade}</Errors>
+									) : null}
+								</div>
+								<div className='flexContainer'>
+									<div>
+										<label htmlFor='estado'>Estado* </label>
+										<Field name='estado' />
+										{errors.estado && touched.estado ? (
+											<Errors>{errors.estado}</Errors>
+										) : null}
+									</div>
+									<div>
+										<label htmlFor='pais'>País* </label>
+										<Field name='pais' />
+										{errors.pais && touched.pais ? (
+											<Errors>{errors.pais}</Errors>
+										) : null}
+									</div>
+								</div>
 
 								{isEditMode ? (
-									<PrimaryButton text='Editar' type='submit' />
+									<PrimaryButton text='Editar' disable type='submit' />
 								) : (
-									// <button type='submit'>Editar</button>
 									<PrimaryButton text='Cadastrar' type='submit' />
-									// <button type='submit'>Cadastrar</button>
 								)}
 								<SecondaryButton text='Cancelar' onClick={handleCancel} />
 							</Form>
 						)}
 					</Formik>
-				</FormWrapper>
-			</FormContainer>
-		</FormBackground>
+				</StyledForm>
+			</FormContainerWider>
+		</PageContainer>
 	);
 };
 export default Address;

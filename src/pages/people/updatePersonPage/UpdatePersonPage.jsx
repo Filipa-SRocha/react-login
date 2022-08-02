@@ -2,10 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { PeopleContext } from '../../../Context/PeopleContext';
 import PeopleForm from '../components/peopleForm';
-import {
-	FormBackground,
-	FormContainer,
-} from '../registerPerson/RegisterPerson.styled';
+import { PageContainer, FormContainer } from '../../../components/Forms.styled';
 
 const UpdatePersonPage = () => {
 	const [person, setPerson] = useState({});
@@ -32,13 +29,13 @@ const UpdatePersonPage = () => {
 	}
 
 	return (
-		<FormBackground>
+		<PageContainer>
 			<FormContainer>
 				{person.nome ? person.nome : <h1>Loading</h1>}
 
 				<PeopleForm isEditMode={true} id={id} personDetails={person} />
 			</FormContainer>
-		</FormBackground>
+		</PageContainer>
 	);
 };
 export default UpdatePersonPage;

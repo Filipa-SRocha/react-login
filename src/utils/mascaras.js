@@ -1,14 +1,14 @@
 import moment from 'moment';
 
 export const removeCpfMask = (maskedCpf) => {
-	if (maskedCpf.length !== 14) {
-		console.log('erro, cpf com máscara inválido', maskedCpf);
-		return;
+	if (!maskedCpf) {
+		return '';
 	}
 	const simpleCpf = maskedCpf
 		.replaceAll('.', '')
 		.replaceAll('-', '')
-		.replaceAll('_', '');
+		.replaceAll('_', '')
+		.replace(' ', '');
 
 	return simpleCpf;
 };
@@ -30,7 +30,15 @@ export const addCpfMask = (simpleCpf) => {
 	return maskedCpf;
 };
 
-export const removeCepMask = () => {};
+export const removeCepInputFormat = (formattedCep) => {
+	//FormattedCep = 433__-__
+	return formattedCep.replaceAll('_', '').replace('-', '');
+};
+
+export const removeCepMask = (maskedCep) => {
+	const simpleCep = maskedCep.slice(0, 5) + maskedCep.slice(6);
+	return simpleCep;
+};
 
 export const addCepMask = () => {};
 

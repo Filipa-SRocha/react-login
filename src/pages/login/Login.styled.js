@@ -1,34 +1,22 @@
 import styled from 'styled-components';
 import { secondaryColor, primaryColor } from '../../consts';
 
-export const PageContainer = styled.div`
-	width: 100vw;
-	height: 100vh;
-	position: absolute;
-	top: 0;
-	background-color: #363740;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-`;
-
-export const FormContainer = styled.div.attrs((props) => ({
-	className: props.className,
-}))`
-	padding: 32px;
+export const FormContainer = styled.div`
+	padding: 28px;
 	background-color: white;
 	width: 360px;
-	height: 520px;
+	height: 560px;
 	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	justify-content: space-around;
 	align-items: center;
 
 	> div:last-of-type {
+		margin-top: 10px;
 		width: 100%;
 		text-align: center;
-		margin-top: 14px;
+
 		a {
 			color: black;
 		}
@@ -42,14 +30,17 @@ export const FormContainer = styled.div.attrs((props) => ({
 	}
 `;
 
-export const FormLogin = styled.form`
+export const FormLogin = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	margin-top: 30px;
+	height: 200px;
 	color: #363740;
 
 	.StrongPassword {
+		height: 30px;
+		margin: 0;
+
 		display: flex;
 		align-items: center;
 	}
@@ -63,7 +54,7 @@ export const FormLogin = styled.form`
 	}
 
 	input {
-		margin-bottom: 20px;
+		margin-bottom: 4px;
 		width: 100%;
 		padding: 6px;
 		background-color: #fcfdfe;
@@ -73,25 +64,28 @@ export const FormLogin = styled.form`
 		color: #4b506d;
 	}
 
-	div {
+	& div {
+		height: 40px;
+		margin-bottom: 40px;
+	}
+
+	& button {
+		margin-top: 30px;
+	}
+
+	& div:last-of-type {
 		button {
 			width: 20px;
 			height: 20px;
 			position: relative;
-			top: -46px;
-			right: -260px;
+			top: -58px;
+			right: -268px;
 			background-color: transparent;
 			color: grey;
 			border: none;
 			cursor: pointer;
 		}
 	}
-`;
-
-export const Errors = styled.div`
-	color: red;
-	font-size: 12px;
-	margin-top: -12px;
 `;
 
 export const LogoContainer = styled.div`

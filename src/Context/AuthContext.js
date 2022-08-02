@@ -42,6 +42,7 @@ function AuthContextProvider({ children }) {
 
 	const handleSignUp = async (user) => {
 		try {
+			console.log('teste');
 			await apiDBC.post('/auth/create', user);
 			toast.success('Usuário cadastrado com sucesso!');
 			window.location.href = '/';

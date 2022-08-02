@@ -1,15 +1,10 @@
-import { useFormik } from 'formik';
+import { Form, Field, Formik } from 'formik';
 import { useContext, useState } from 'react';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
-import {
-	FormLogin,
-	FormContainer,
-	PageContainer,
-	LogoContainer,
-	LogoImg,
-} from './Login.styled';
+import { FormLogin, FormContainer, LogoContainer } from './Login.styled';
+import { PageContainer, Errors } from '../../components/Forms.styled';
 import Logo from '../../images/logoImg.png';
 import { BsEyeSlash } from 'react-icons/bs';
 import { BsEye } from 'react-icons/bs';
@@ -22,18 +17,6 @@ const Login = () => {
 	const SignInSchema = Yup.object().shape({
 		login: Yup.string().required('Login obrigatório'),
 		senha: Yup.string().required('Por favor digite a sua senha!'),
-	});
-
-	const formik = useFormik({
-		initialValues: {
-			login: '',
-			senha: '',
-		},
-		validationSchema: SignInSchema,
-
-		onSubmit: (values) => {
-			handleLogin(values);
-		},
 	});
 
 	const changePasswordVisibility = () => {
@@ -52,34 +35,51 @@ const Login = () => {
 					<p>Introduza o seu nome de usuário e senha</p>
 				</LogoContainer>
 
-				<FormLogin onSubmit={formik.handleSubmit}>
-					<label htmlFor='login'>LOGIN:</label>
-					<input
-						id='login'
-						name='login'
-						type='text'
-						placeholder='Nome de usuário'
-						onChange={formik.handleChange}
-						value={formik.values.login}
-					/>
+				<FormLogin>
+					<Formik
+						initialValues={{
+							login: '',
+							senha: '',
+						}}
+						validationSchema={SignInSchema}
+						onSubmit={(values) => {
+							handleLogin(values);
+						}}
+					>
+						{({ errors, touched }) => (
+							<Form>
+								<div>
+									<label htmlFor='login'>LOGIN: </label>
+									<Field name='login' placeholder='Nome de usuário' />
+									{errors.login && touched.login ? (
+										<Errors>{errors.login}</Errors>
+									) : null}
+								</div>
 
-					<label htmlFor='senha'>SENHA: </label>
-					<div>
-						<input
-							id='senha'
-							name='senha'
-							type={isPasswordVisible ? 'text' : 'password'}
-							placeholder='Senha'
-							onChange={formik.handleChange}
-							value={formik.values.senha}
-						/>
-						<button type='button' onClick={changePasswordVisibility}>
-							{isPasswordVisible ? <BsEye /> : <BsEyeSlash />}
-						</button>
-					</div>
+								<div>
+									<label htmlFor='senha'>SENHA </label>
+									<div style={{ margin: 0 }}>
+										<Field
+											name='senha'
+											type={isPasswordVisible ? 'text' : 'password'}
+											placeholder='Senha'
+										/>
 
-					<PrimaryButton type='submit' text='Login' />
+										<button type='button' onClick={changePasswordVisibility}>
+											{isPasswordVisible ? <BsEye /> : <BsEyeSlash />}
+										</button>
+									</div>
+									{errors.senha && touched.senha ? (
+										<Errors>{errors.senha}</Errors>
+									) : null}
+								</div>
+
+								<PrimaryButton type='submit' text='Login' />
+							</Form>
+						)}
+					</Formik>
 				</FormLogin>
+
 				<div>
 					<Link to='/new-account'>
 						Ainda não tem conta?<span> Cadastre-se</span>
