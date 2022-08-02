@@ -9,13 +9,14 @@ function AddressContextProvider({ children }) {
 	const navigate = useNavigate();
 	const [isEditMode, setIsEditMode] = useState(false);
 
-	async function createAddress(address) {
+	async function createAddress(address, resetForm) {
 		try {
 			const { data } = await apiDBC.post(
 				`/endereco/${address.idPessoa}?idPessoa=${address.idPessoa}`,
 				address
 			);
 			toast.success('Novo endereço cadastrado!');
+			resetForm();
 			navigate('/people');
 		} catch (error) {
 			toast.error('Erro no cadastro de endereço.');
@@ -44,10 +45,11 @@ function AddressContextProvider({ children }) {
 		}
 	};
 
-	const updateAddress = async (idEndereco, newAddress) => {
+	const updateAddress = async (idEndereco, newAddress, resetForm) => {
 		try {
 			const endereco = await apiDBC.put(`/endereco/${idEndereco}`, newAddress);
 			toast.success('Endereço atualizado com sucesso!');
+			resetForm();
 			navigate('/people');
 		} catch (error) {
 			console.log('Erro =>', error);

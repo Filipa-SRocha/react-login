@@ -72,14 +72,14 @@ const Address = ({ idPessoa, idEndereco }) => {
 		}, []);
 	};
 
-	const handleSubmit = (values) => {
+	const handleSubmit = (values, resetForm) => {
 		const cleanAddress = cleanInputs(values);
 		if (isEditMode) {
 			setIsEditMode(false);
-			updateAddress(idEndereco, cleanAddress);
+			updateAddress(idEndereco, cleanAddress, resetForm);
 			return;
 		}
-		createAddress(cleanAddress);
+		createAddress(cleanAddress, resetForm);
 	};
 
 	const handleCancel = () => {
@@ -157,8 +157,7 @@ const Address = ({ idPessoa, idEndereco }) => {
 						}}
 						validationSchema={SignupSchema}
 						onSubmit={(values, { resetForm }) => {
-							handleSubmit(values);
-							resetForm();
+							handleSubmit(values, resetForm);
 						}}
 					>
 						{({ errors, touched }) => (
