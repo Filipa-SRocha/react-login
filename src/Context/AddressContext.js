@@ -58,8 +58,10 @@ function AddressContextProvider({ children }) {
 	const deleteAddress = async (id) => {
 		try {
 			await apiDBC.delete(`/endereco/${id}`);
+			toast.success('Endereço excluído com sucesso!');
 		} catch (error) {
 			console.log('Erro => ', error);
+			toast.error('Erro na eliminação do endereço');
 		}
 	};
 
