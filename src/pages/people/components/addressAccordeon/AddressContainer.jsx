@@ -3,7 +3,10 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { AiOutlineDown } from 'react-icons/ai';
 import { AiOutlineUp } from 'react-icons/ai';
 import { AddressContext } from '../../../../Context/AddressContext';
-import { AddressContent, AddressTitle } from './AddressContainer.styled';
+import {
+	AccordeonContentContainer,
+	AccordeonTab,
+} from '../../../../components/Accordeon/Accordeon.styled';
 
 import { PersonAddress } from './PersonAddress';
 
@@ -27,12 +30,12 @@ const AddressContainer = ({ idPessoa }) => {
 
 	return (
 		<>
-			<AddressTitle onClick={toggleAccordeon}>
+			<AccordeonTab onClick={toggleAccordeon}>
 				<AiOutlineHome /> <h3>Endereço</h3>{' '}
 				{isOpen ? <AiOutlineUp /> : <AiOutlineDown />}
-			</AddressTitle>
+			</AccordeonTab>
 
-			<AddressContent className={isOpen ? 'show' : ''}>
+			<AccordeonContentContainer className={isOpen ? 'show' : ''}>
 				{addressArray.length > 0 ? (
 					<ul>
 						{addressArray.map((address) => {
@@ -53,7 +56,7 @@ const AddressContainer = ({ idPessoa }) => {
 						</p>
 					</>
 				)}
-			</AddressContent>
+			</AccordeonContentContainer>
 		</>
 	);
 };

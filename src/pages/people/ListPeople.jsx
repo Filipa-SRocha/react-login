@@ -15,7 +15,7 @@ import {
 	ButtonContainer,
 	ListItemContainer,
 	PersonContainer,
-	AddressesContainer,
+	AccordeonsContainer,
 	Legenda,
 } from './People.styled';
 import ContactsAccordeon from '../contacts/contactsAccordeon/ContactsAccordeon';
@@ -69,7 +69,7 @@ const ListPeople = ({ people }) => {
 									></CrudActionButton>
 								</ButtonContainer>
 							</PersonContainer>
-							<AddressesContainer>
+							<AccordeonsContainer>
 								<AddressContainer idPessoa={person.idPessoa} />
 								<SecondaryButton
 									text='Novo Endereço'
@@ -78,8 +78,8 @@ const ListPeople = ({ people }) => {
 										navigate(`/new-address/${person.idPessoa}`);
 									}}
 								/>
-							</AddressesContainer>
-							<div>
+							</AccordeonsContainer>
+							<AccordeonsContainer>
 								<ContactsAccordeon idPessoa={person.idPessoa} />
 								<SecondaryButton
 									text='Novo Contato'
@@ -88,7 +88,7 @@ const ListPeople = ({ people }) => {
 										navigate(`/new-contact/${person.idPessoa}`);
 									}}
 								/>
-							</div>
+							</AccordeonsContainer>
 						</ListItemContainer>
 					</>
 				))}

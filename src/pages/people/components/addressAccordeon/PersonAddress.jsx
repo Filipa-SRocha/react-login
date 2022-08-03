@@ -10,11 +10,17 @@ import { BiEditAlt } from 'react-icons/bi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { CrudSmallActionButton } from '../../../../components/button/Buttons';
 
+// import {
+// 	PersonAddressContainer,
+// 	AddressItemContainer,
+// 	AddressButtonsContainer,
+// } from './AddressContainer.styled';
+
 import {
-	PersonAddressContainer,
-	AddressItemContainer,
-	AddressButtonsContainer,
-} from './AddressContainer.styled';
+	AccordeonItemContainer,
+	AccordeonDetailsContainer,
+	AccordeonButtonsContainer,
+} from '../../../../components/Accordeon/Accordeon.styled';
 
 const PersonAddress = ({ address, setup, idPessoa }) => {
 	const navigate = useNavigate();
@@ -33,8 +39,8 @@ const PersonAddress = ({ address, setup, idPessoa }) => {
 	};
 
 	return (
-		<AddressItemContainer>
-			<PersonAddressContainer>
+		<AccordeonItemContainer>
+			<AccordeonDetailsContainer>
 				<div>
 					{address.tipo === 'COMERCIAL' ? (
 						<MdHomeRepairService />
@@ -48,9 +54,9 @@ const PersonAddress = ({ address, setup, idPessoa }) => {
 				<small>
 					{address.cep} {address.cidade}, {address.estado}, {address.pais}
 				</small>
-			</PersonAddressContainer>
+			</AccordeonDetailsContainer>
 
-			<AddressButtonsContainer>
+			<AccordeonButtonsContainer>
 				<CrudSmallActionButton
 					text='Editar'
 					icon='edit'
@@ -81,8 +87,8 @@ const PersonAddress = ({ address, setup, idPessoa }) => {
 						});
 					}}
 				/>
-			</AddressButtonsContainer>
-		</AddressItemContainer>
+			</AccordeonButtonsContainer>
+		</AccordeonItemContainer>
 	);
 };
 export { PersonAddress };

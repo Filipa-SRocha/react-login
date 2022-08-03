@@ -70,7 +70,7 @@ export const ButtonContainer = styled.div`
 	}
 `;
 
-export const AddressesContainer = styled.div`
+export const AccordeonsContainer = styled.div`
 	padding: 10px;
 	display: flex;
 	flex-direction: column;

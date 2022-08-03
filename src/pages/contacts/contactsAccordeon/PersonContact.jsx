@@ -3,6 +3,11 @@ import { confirmAlert } from 'react-confirm-alert';
 import { useContext } from 'react';
 import { ContactContext } from '../../../Context/ContactContext';
 import { useNavigate } from 'react-router-dom';
+import {
+	AccordeonButtonsContainer,
+	AccordeonDetailsContainer,
+	AccordeonItemContainer,
+} from '../../../components/Accordeon/Accordeon.styled';
 
 const PersonContact = ({ contato, setup }) => {
 	const navigate = useNavigate();
@@ -20,12 +25,12 @@ const PersonContact = ({ contato, setup }) => {
 	};
 
 	return (
-		<>
-			<div>
+		<AccordeonItemContainer>
+			<AccordeonDetailsContainer>
 				<p>{contato.telefone}</p>
 				<p>{contato.descricao}</p>
-			</div>
-			<div>
+			</AccordeonDetailsContainer>
+			<AccordeonButtonsContainer>
 				<CrudSmallActionButton
 					text='Editar'
 					icon='edit'
@@ -56,8 +61,8 @@ const PersonContact = ({ contato, setup }) => {
 						});
 					}}
 				/>
-			</div>
-		</>
+			</AccordeonButtonsContainer>
+		</AccordeonItemContainer>
 	);
 };
 export default PersonContact;

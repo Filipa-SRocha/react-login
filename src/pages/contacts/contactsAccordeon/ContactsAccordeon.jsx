@@ -2,6 +2,10 @@ import { useContext, useEffect, useState } from 'react';
 import { AiOutlinePhone } from 'react-icons/ai';
 import { AiOutlineDown } from 'react-icons/ai';
 import { AiOutlineUp } from 'react-icons/ai';
+import {
+	AccordeonContentContainer,
+	AccordeonTab,
+} from '../../../components/Accordeon/Accordeon.styled';
 import { ContactContext } from '../../../Context/ContactContext';
 import PersonContact from './PersonContact';
 
@@ -25,12 +29,12 @@ const ContactsAccordeon = ({ idPessoa }) => {
 
 	return (
 		<>
-			<h3 onClick={toggleAccordeon}>
+			<AccordeonTab onClick={toggleAccordeon}>
 				<AiOutlinePhone /> <h3>Contactos</h3>
 				{isOpen ? <AiOutlineUp /> : <AiOutlineDown />}
-			</h3>
+			</AccordeonTab>
 
-			<div className={isOpen ? 'show' : ''}>
+			<AccordeonContentContainer className={isOpen ? 'show' : ''}>
 				{contactsArray && contactsArray.length > 0 ? (
 					<ul>
 						{contactsArray.map((contato) => {
@@ -51,7 +55,7 @@ const ContactsAccordeon = ({ idPessoa }) => {
 						</p>
 					</>
 				)}
-			</div>
+			</AccordeonContentContainer>
 		</>
 	);
 };
