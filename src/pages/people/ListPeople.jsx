@@ -71,23 +71,10 @@ const ListPeople = ({ people }) => {
 							</PersonContainer>
 							<AccordeonsContainer>
 								<AddressContainer idPessoa={person.idPessoa} />
-								<SecondaryButton
-									text='Novo Endereço'
-									width='160px'
-									onClick={() => {
-										navigate(`/new-address/${person.idPessoa}`);
-									}}
-								/>
 							</AccordeonsContainer>
+
 							<AccordeonsContainer>
 								<ContactsAccordeon idPessoa={person.idPessoa} />
-								<SecondaryButton
-									text='Novo Contato'
-									width='160px'
-									onClick={() => {
-										navigate(`/new-contact/${person.idPessoa}`);
-									}}
-								/>
 							</AccordeonsContainer>
 						</ListItemContainer>
 					</>

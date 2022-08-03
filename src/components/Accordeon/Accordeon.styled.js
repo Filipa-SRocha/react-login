@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const AccordeonTab = styled.div`
+export const AccordeonTabStyled = styled.div`
 	margin-bottom: 6px;
 	display: flex;
 	align-items: center;

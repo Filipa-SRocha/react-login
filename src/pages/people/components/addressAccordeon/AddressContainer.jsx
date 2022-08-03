@@ -5,19 +5,19 @@ import { AiOutlineUp } from 'react-icons/ai';
 import { AddressContext } from '../../../../Context/AddressContext';
 import {
 	AccordeonContentContainer,
-	AccordeonTab,
+	AccordeonTabS,
 } from '../../../../components/Accordeon/Accordeon.styled';
 
 import { PersonAddress } from './PersonAddress';
+import { useNavigate } from 'react-router-dom';
+import { SecondaryButton } from '../../../../components/button/Buttons';
+import { AccordeonTab } from '../../../../components/Accordeon/Accordeon';
 
 const AddressContainer = ({ idPessoa }) => {
+	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 	const [addressArray, setAddressArray] = useState([]);
 	const { getAddress } = useContext(AddressContext);
-
-	const toggleAccordeon = () => {
-		isOpen ? setIsOpen(false) : setIsOpen(true);
-	};
 
 	const setup = async () => {
 		setAddressArray(await getAddress(idPessoa));
@@ -30,10 +30,7 @@ const AddressContainer = ({ idPessoa }) => {
 
 	return (
 		<>
-			<AccordeonTab onClick={toggleAccordeon}>
-				<AiOutlineHome /> <h3>Endereço</h3>{' '}
-				{isOpen ? <AiOutlineUp /> : <AiOutlineDown />}
-			</AccordeonTab>
+			<AccordeonTab title='Endereços' isOpen={isOpen} setIsOpen={setIsOpen} />
 
 			<AccordeonContentContainer className={isOpen ? 'show' : ''}>
 				{addressArray.length > 0 ? (
@@ -56,6 +53,13 @@ const AddressContainer = ({ idPessoa }) => {
 						</p>
 					</>
 				)}
+				<SecondaryButton
+					text='Novo Endereço'
+					width='160px'
+					onClick={() => {
+						navigate(`/new-address/${idPessoa}`);
+					}}
+				/>
 			</AccordeonContentContainer>
 		</>
 	);
