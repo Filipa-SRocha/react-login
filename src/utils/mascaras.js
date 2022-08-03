@@ -85,3 +85,10 @@ export const removePeopleInputMasks = (person) => {
 	person.dataNascimento = convertDateToUsaFormat(person.dataNascimento);
 	return person;
 };
+
+export const removePhoneMask = (number) => {
+	console.log('Numero recebido:', number);
+	const simpleNumber = number.repleceAll('[^d]', '');
+	console.log('Numero retornado:', simpleNumber);
+	return simpleNumber;
+};

@@ -14,6 +14,9 @@ import NewAccount from '../pages/login/NewAccount';
 import RegisterAddressPage from '../pages/address/RegisterAddressPage';
 import { AddressContextProvider } from '../Context/AddressContext';
 import { UpdateAddressPage } from '../pages/address/UpdateAddressPage';
+import { ContactContextProvider } from '../Context/ContactContext';
+import { NewContactPage } from '../pages/contacts/NewContactPage';
+import { UpdateContactPage } from '../pages/contacts/UpdateContactPage';
 
 const Router = () => {
 	const { isLogged } = useContext(AuthContext);
@@ -23,36 +26,48 @@ const Router = () => {
 			<Header />
 			<PeopleContextProvider>
 				<AddressContextProvider>
-					<Routes>
-						{isLogged ? (
-							<>
-								<Route path='/people' element={<People />} />
-								<Route
-									path='/new-address/:idPessoa'
-									element={<RegisterAddressPage />}
-								/>
-								<Route
-									path='/update-address/:idEndereco'
-									element={<UpdateAddressPage />}
-								/>
+					<ContactContextProvider>
+						<Routes>
+							{isLogged ? (
+								<>
+									<Route path='/people' element={<People />} />
+									<Route
+										path='/new-address/:idPessoa'
+										element={<RegisterAddressPage />}
+									/>
+									<Route
+										path='/update-address/:idEndereco'
+										element={<UpdateAddressPage />}
+									/>
 
-								<Route
-									path='/people/register-person'
-									element={<RegisterPerson />}
-								/>
-								<Route
-									path='/people/update-person/:id'
-									element={<UpdatePersonPage />}
-								/>
-							</>
-						) : (
-							<>
-								<Route path='/' element={<Login />} />
-								<Route path='/new-account' element={<NewAccount />} />
-							</>
-						)}
-						<Route path='*' element={<NotFound />} />
-					</Routes>
+									<Route
+										path='/people/register-person'
+										element={<RegisterPerson />}
+									/>
+									<Route
+										path='/people/update-person/:id'
+										element={<UpdatePersonPage />}
+									/>
+
+									<Route
+										path='/new-contact/:idPessoa'
+										element={<NewContactPage />}
+									/>
+
+									<Route
+										path='/update-contact/:idPessoa/:idContato'
+										element={<UpdateContactPage />}
+									/>
+								</>
+							) : (
+								<>
+									<Route path='/' element={<Login />} />
+									<Route path='/new-account' element={<NewAccount />} />
+								</>
+							)}
+							<Route path='*' element={<NotFound />} />
+						</Routes>
+					</ContactContextProvider>
 				</AddressContextProvider>
 			</PeopleContextProvider>
 			{/* <Footer /> */}

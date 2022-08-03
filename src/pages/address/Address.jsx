@@ -44,7 +44,7 @@ const Address = ({ idPessoa, idEndereco }) => {
 
 	const GetCep = () => {
 		const { values } = useFormikContext();
-		console.log('Action');
+
 		useEffect(() => {
 			if (!values.cep.includes('_')) {
 				handleCep(values);

@@ -18,6 +18,7 @@ import {
 	AddressesContainer,
 	Legenda,
 } from './People.styled';
+import ContactsAccordeon from '../contacts/contactsAccordeon/ContactsAccordeon';
 
 const ListPeople = ({ people }) => {
 	const { handleDelete, handleEdit } = useContext(PeopleContext);
@@ -78,6 +79,16 @@ const ListPeople = ({ people }) => {
 									}}
 								/>
 							</AddressesContainer>
+							<div>
+								<ContactsAccordeon idPessoa={person.idPessoa} />
+								<SecondaryButton
+									text='Novo Contato'
+									width='160px'
+									onClick={() => {
+										navigate(`/new-contact/${person.idPessoa}`);
+									}}
+								/>
+							</div>
 						</ListItemContainer>
 					</>
 				))}

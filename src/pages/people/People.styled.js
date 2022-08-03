@@ -6,6 +6,12 @@ export const PageContainer = styled.section`
 	margin: 0 auto;
 	margin-left: 240px;
 
+	/* @media only screen and (max-width: 800px) {
+		max-width: 460px;
+		margin: 0 auto;
+		margin-left: 40px;
+	} */
+
 	.peopleTitle {
 		padding: 40px 0 20px 0;
 		display: flex;
