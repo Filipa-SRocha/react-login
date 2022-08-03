@@ -1,5 +1,6 @@
 import { useFormikContext, Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import NumberFormat from 'react-number-format';
 import { useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -31,6 +32,15 @@ const ContactsForm = ({ idPessoa, idContato }) => {
 			.min(1, 'Deve ter pelo menos 1 caractere')
 			.max(250, 'Campo demasiado longo. (Máx: 250 caracteres)'),
 	});
+
+	function validatePhone(value) {
+		let error;
+
+		if (value.length < 14) {
+			error = 'Número inválido';
+		}
+		return error;
+	}
 
 	const handleCancel = () => {
 		navigate('/people');
@@ -106,7 +116,17 @@ const ContactsForm = ({ idPessoa, idContato }) => {
 								</div>
 								<div>
 									<label htmlFor='telefone'>Telefone*</label>
-									<Field name='telefone' />
+									<Field name='telefone' validate={validatePhone}>
+										{({ field, form, meta }) => (
+											<NumberFormat
+												{...field}
+												format='(##)#####-####'
+												mask='_'
+												id='telefone'
+												type='text'
+											/>
+										)}
+									</Field>
 									{touched.telefone && errors.telefone ? (
 										<Errors>{errors.telefone}</Errors>
 									) : null}
